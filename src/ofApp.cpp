@@ -128,7 +128,8 @@ void ofApp::setup(){
     
     for (int i=0;i<MAX_STALAC;i++){
         stalacs[i].cyl.set(2*width,0);
-        //stalacs[i].xChord = <c,f>;
+        stalacs[i].isDrawn = false;
+        //stalacs[i].xChord = [c,f];
         
     }
     maxHeight=10*width;
@@ -287,15 +288,18 @@ void ofApp::draw(){
         if (currentHeight < maxHeight*0.9 && isGrowing){
             stalacs[0].cyl.setHeight(currentHeight+(maxHeight-currentHeight)*(slew*0.05));
             stalacs[0].cyl.draw();
+            stalacs[0].isDrawn = true;
             }
         else if (currentHeight>0.5*maxHeight) {
             stalacs[0].cyl.setHeight(currentHeight-(currentHeight)*(slew*0.05));
             stalacs[0].cyl.draw();
+            stalacs[0].isDrawn = true;
             isGrowing=false;
         }
         else {
             isGrowing=true;
             stalacs[0].cyl.draw();
+            stalacs[0].isDrawn = true;
         }
         
         
@@ -512,9 +516,23 @@ void ofApp::drawMenuScreen(){
 
 //-----------Trigger Chord Function-----------------------------
 void ofApp::triggerChord(){
+    float gain=50;
     
     for (int i=0;i<MAX_STALAC;i++){
-        
+        if (stalacs[i].isDrawn){
+        if (posNode.getX()==stalacs[i].cyl.getX()){
+            //Play note 1 of x chord
+            stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
+            //Play not 2 of x chord
+            stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
+            }
+        if (posNode.getZ()==stalacs[i].cyl.getZ()){
+            //Play note 1 of z chord
+            stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
+            //Play not 2 of z chord
+            stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
+            }
+        }
     }
     
 }

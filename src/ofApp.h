@@ -150,8 +150,8 @@ class ofApp : public ofBaseApp{
     
     struct Stalacmite {
         ofCylinderPrimitive cyl;
-        vector<MusicalNote> xChord;
-        vector<MusicalNote> zChord;
+        MusicalNote xChord[2];
+        MusicalNote zChord[2];
         int xOctave;
         int zOctave;
         bool isDrawn;
