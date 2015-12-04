@@ -62,6 +62,7 @@ void ofApp::setup(){
     
     //Cam 0 is the moving camera behind the sphere
     cam[0].pan(220);
+    cam[0].setFov(65);
     
     //Cam 1 is the top view, looking at the sphere
     cam[1].setPosition(ROOM_WIDTH/2,ROOM_HEIGHT*2,ROOM_DEPTH/2);
@@ -112,7 +113,7 @@ void ofApp::setup(){
     posNode.setPosition(userPos.getX(),userPos.getY(),userPos.getZ());
     target.setPosition(userPos.getX()+20,userPos.getY(),userPos.getZ());
     
-    slew = 0.10;
+    slew = 0.05;
     
     xInc = 10;
     yInc = 50;
