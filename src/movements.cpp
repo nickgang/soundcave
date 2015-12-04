@@ -13,6 +13,10 @@
 #include "maximilian.h"/* include the maximilian library */
 #include "time.h"
 
+
+//---------------------------------------------------------------
+// Function to move sphere through the cave in one of a few paths
+//---------------------------------------------------------------
 void ofApp::moveTarget(string spherePath){
     if(spherePath=="border"){
         //Update target position
@@ -54,5 +58,8 @@ void ofApp::moveTarget(string spherePath){
                     wallCounter=0;
                 }
         }
+    }
+    else if(spherePath=="figureEight"){
+        //Add figure 8 path here
     }
 }
