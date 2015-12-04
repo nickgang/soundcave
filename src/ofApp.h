@@ -114,7 +114,11 @@ class ofApp : public ofBaseApp{
     
     
     //---- Lots of stuff for the user position ball -----
+    
     ofIcoSpherePrimitive userPos;
+    
+    void moveTarget(string spherePath);
+    
     float userHeight;
     
     int viewMode;

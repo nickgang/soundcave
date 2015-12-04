@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		007F713E619B81D821BEA319 /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE67198F2891A8FFEA3686E6 /* ofxFftBasic.cpp */; };
+		013C44511C1231CE0094E672 /* movements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013C44501C1231CE0094E672 /* movements.cpp */; settings = {ASSET_TAGS = (); }; };
 		04160A407B4A0EF2802CFD5D /* FreeVerb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D4ACAC3A4330636E294E843 /* FreeVerb.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		0686C38EE993C67B96002FA1 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B053B6F1252BCFCFF0F59AC /* kiss_fft.c */; };
@@ -173,6 +174,7 @@
 
 /* Begin PBXFileReference section */
 		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
+		013C44501C1231CE0094E672 /* movements.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = movements.cpp; sourceTree = "<group>"; };
 		01CD338C1C0663950075FCF1 /* stalacmite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stalacmite.h; sourceTree = "<group>"; };
 		01D9BBA9E17BE95BBC49EF43 /* Modulate.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Modulate.h; path = ../../../addons/ofxStk/libs/STK/include/Modulate.h; sourceTree = SOURCE_ROOT; };
 		01F34ABDE09DDFBAE2B7B25B /* Voicer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Voicer.h; path = ../../../addons/ofxStk/libs/STK/include/Voicer.h; sourceTree = SOURCE_ROOT; };
@@ -962,6 +964,7 @@
 				01CD338C1C0663950075FCF1 /* stalacmite.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				013C44501C1231CE0094E672 /* movements.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 			);
 			path = src;
@@ -1184,6 +1187,7 @@
 				04160A407B4A0EF2802CFD5D /* FreeVerb.cpp in Sources */,
 				76100B9BBBF9DC5693F0B7E3 /* Granulate.cpp in Sources */,
 				FAD83B040BDBF2097CAC16AE /* Guitar.cpp in Sources */,
+				013C44511C1231CE0094E672 /* movements.cpp in Sources */,
 				ABCB74EFE0407A73EE922F82 /* HevyMetl.cpp in Sources */,
 				C89872D9B7CA1D257C3346E1 /* Iir.cpp in Sources */,
 				37ECC7537D4C740A6B8C8B81 /* JCRev.cpp in Sources */,

@@ -113,7 +113,7 @@ void ofApp::setup(){
     posNode.setPosition(userPos.getX(),userPos.getY(),userPos.getZ());
     target.setPosition(userPos.getX()+20,userPos.getY(),userPos.getZ());
     
-    slew = 0.05;
+    slew = 0.10;
     
     xInc = 10;
     yInc = 50;
@@ -127,6 +127,8 @@ void ofApp::setup(){
     
     //----------Cylinder Setup--------------------------------------
     
+    
+    //Initialize all stalacmites to the same parameters for now
     for (int i=0;i<MAX_STALAC;i++){
         stalacs[i].cyl.set(2*width,0);
         
@@ -138,8 +140,8 @@ void ofApp::setup(){
         stalacs[i].zChord[0]=f;
         stalacs[i].zChord[1]=c;
         
-        stalacs[i].xOctave=0;
-        stalacs[i].zOctave=0;
+        stalacs[i].xOctave=2;
+        stalacs[i].zOctave=2;
         
     }
     maxHeight=10*width;
@@ -307,6 +309,9 @@ void ofApp::draw(){
         if (currentHeight < maxHeight*0.9 && isGrowing){
             stalacs[0].cyl.setHeight(currentHeight+(maxHeight-currentHeight)*(slew*0.05));
             stalacs[0].cyl.draw();
+            
+            //
+            
             //stalacs[0].cylPos.setGlobalPosition(stalacs[0].cyl.getGlobalPosition());
             stalacs[0].isDrawn = true;
             }
@@ -329,44 +334,8 @@ void ofApp::draw(){
         ofPopStyle();
         ofPopMatrix();
     
-    //Update target position
-    switch (wallCounter) {
-        case 0:
-            if (target.getX()<ROOM_WIDTH-margin){
-                target.setPosition(target.getX()+xInc,target.getY(),target.getZ());
-            }
-            else {
-                target.setPosition(target.getX(),target.getY(),target.getZ()+zInc);
-                wallCounter++;
-            }
-            break;
-        case 1:
-            if (target.getZ()<ROOM_DEPTH-margin){
-                target.setPosition(target.getX(),target.getY(),target.getZ()+zInc);
-            }
-            else {
-                target.setPosition(target.getX()-xInc,target.getY(),target.getZ());
-                wallCounter++;
-            }
-            break;
-        case 2:
-            if (target.getX()>margin){
-                target.setPosition(target.getX()-xInc,target.getY(),target.getZ());
-            }
-            else {
-                target.setPosition(target.getX(),target.getY(),target.getZ()-zInc);
-                wallCounter++;
-            }
-            break;
-        case 3:
-            if (target.getZ()>margin){
-                target.setPosition(target.getX(),target.getY(),target.getZ()-zInc);
-            }
-            else {
-                target.setPosition(target.getX()+xInc,target.getY(),target.getZ());
-                wallCounter=0;
-            }
-    }
+        //Update target position
+        moveTarget("border");
 
     ofPushMatrix();
     
@@ -544,13 +513,13 @@ void ofApp::triggerChord(){
     
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn){
-            if (abs(posNode.getX()-stalacs[i].cyl.getX())<10){
+            if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
                 //Play note 1 of x chord
                 stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
                 //Play not 2 of x chord
                 stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
                 }
-            if (abs(posNode.getZ()-stalacs[i].cyl.getZ())<10){
+            if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
                 //Play note 1 of z chord
                 stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
                 //Play not 2 of z chord
