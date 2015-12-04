@@ -153,6 +153,7 @@ class ofApp : public ofBaseApp{
     
     struct Stalacmite {
         ofCylinderPrimitive cyl;
+        ofNode cylPos;
         MusicalNote xChord[2];
         MusicalNote zChord[2];
         int xOctave;

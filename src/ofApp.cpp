@@ -217,7 +217,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    cerr << posNode.getPosition() << endl;
+    cerr << "Stalac Position: " << stalacs[0].cylPos.getPosition() << endl;
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
@@ -292,8 +292,11 @@ void ofApp::draw(){
     drawRoom();
         
         //This is drawing a cylinder in the middle of the room
+        
+        stalacs[0].cylPos.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
+        
         ofPushMatrix();
-        ofTranslate(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
+        ofTranslate(stalacs[0].cylPos.getPosition());
         ofPushStyle();
         ofDisableAlphaBlending();
         ofSetColor(255);
@@ -304,17 +307,20 @@ void ofApp::draw(){
         if (currentHeight < maxHeight*0.9 && isGrowing){
             stalacs[0].cyl.setHeight(currentHeight+(maxHeight-currentHeight)*(slew*0.05));
             stalacs[0].cyl.draw();
+            //stalacs[0].cylPos.setGlobalPosition(stalacs[0].cyl.getGlobalPosition());
             stalacs[0].isDrawn = true;
             }
         else if (currentHeight>0.5*maxHeight) {
             stalacs[0].cyl.setHeight(currentHeight-(currentHeight)*(slew*0.05));
             stalacs[0].cyl.draw();
+            //stalacs[0].cylPos.setGlobalPosition(stalacs[0].cyl.getGlobalPosition());
             stalacs[0].isDrawn = true;
             isGrowing=false;
         }
         else {
             isGrowing=true;
             stalacs[0].cyl.draw();
+            //stalacs[0].cylPos.setGlobalPosition(stalacs[0].cyl.getGlobalPosition());
             stalacs[0].isDrawn = true;
         }
         
@@ -659,7 +665,7 @@ void ofApp::keyPressed(int key){
         //This one is for Maximilian stuff
         case OF_KEY_RETURN:
             isTraining=!isTraining;
-            cout << isTraining;
+            //cout << isTraining;
             break;
         case 'p':
             playGrains = !playGrains;
@@ -798,7 +804,7 @@ void ofApp::mouseMoved(int x, int y ){
         m.addFloatArg((float)y/ofGetHeight());
         m.addFloatArg((float)current/stretches.size()-1);
         sender.sendMessage(m);
-        cout << "messageSent" << "\n";
+        //cout << "messageSent" << "\n";
     }
     
     
