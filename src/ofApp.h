@@ -54,6 +54,9 @@ class ofApp : public ofBaseApp{
         void audioOut(float * output, int bufferSize, int nChannels);
         void audioIn(float * input, int bufferSize, int nChannels);
     
+    //Vector to store buffers used to draw waveforms in walls
+    vector<float> wallBuffer;
+    
     int	bufferSize;
     
     ofTrueTypeFont title;

@@ -208,6 +208,8 @@ void ofApp::setup(){
     
     ofSetSphereResolution(10);
     
+    wallBuffer.resize(bufferSize);
+    
     ofSoundStreamSetup(2,0,this, sampleRate, bufferSize, 4);
     /* this has to happen at the end of setup - it switches on the DAC */
 }
@@ -387,6 +389,8 @@ void ofApp::drawRoom() {
     float width = ROOM_WIDTH;
     float height = ROOM_HEIGHT;
     float depth = ROOM_DEPTH;
+    
+    float waveScale=0;
 
     ofPushStyle();
     
@@ -400,7 +404,7 @@ void ofApp::drawRoom() {
     for (int i=0;i<NUM_LINES;i++){
         ofBeginShape();
         for (int j=0;j<depth;j++){
-            ofVertex(0,(i*height)/NUM_LINES,j);
+            ofVertex(0,((i*height)/NUM_LINES)+waveScale*wallBuffer[round((double)(depth/bufferSize))],j);
         }
         ofEndShape(false);
     }
@@ -409,7 +413,7 @@ void ofApp::drawRoom() {
     for (int i=0;i<NUM_LINES;i++){
         ofBeginShape();
         for (int j=0;j<width;j++){
-            ofVertex(j,(i*height)/NUM_LINES,depth);
+            ofVertex(j,((i*height)/NUM_LINES)+waveScale*wallBuffer[round((double)(depth/bufferSize))],depth);
         }
         ofEndShape(false);
     }
@@ -418,7 +422,7 @@ void ofApp::drawRoom() {
     for (int i=0;i<NUM_LINES;i++){
         ofBeginShape();
         for (int j=depth;j>=0;j--){
-            ofVertex(width,(i*height)/NUM_LINES,j);
+            ofVertex(width,((i*height)/NUM_LINES)+waveScale*wallBuffer[round((double)(depth/bufferSize))],j);
         }
         ofEndShape(false);
     }
@@ -427,7 +431,7 @@ void ofApp::drawRoom() {
     for (int i=0;i<NUM_LINES;i++){
         ofBeginShape();
         for (int j=width;j>=0;j--){
-            ofVertex(j,(i*height)/NUM_LINES,0);
+            ofVertex(j,((i*height)/NUM_LINES)+waveScale*wallBuffer[round((double)(depth/bufferSize))],0);
         }
         ofEndShape(false);
     }
@@ -606,6 +610,13 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
             output[i*nChannels] = value(i,0);
             output[i*nChannels + 1] = value(i,0);
         }
+
+        // Set wallBuffer to the audio signal we are hearing
+        // We will assign this to make waveforms in the walls in drawRoom
+        
+        //Interpolate the signal
+        float tau = 0.4;
+        wallBuffer[i] += (output[i*nChannels]-wallBuffer[i])*tau;
         
         /* You may end up with lots of outputs. add them here */
     }
