@@ -128,8 +128,17 @@ void ofApp::setup(){
     
     for (int i=0;i<MAX_STALAC;i++){
         stalacs[i].cyl.set(2*width,0);
+        
         stalacs[i].isDrawn = false;
-        //stalacs[i].xChord = [c,f];
+        
+        stalacs[i].xChord[0]=c;
+        stalacs[i].xChord[1]=g;
+        
+        stalacs[i].zChord[0]=f;
+        stalacs[i].zChord[1]=c;
+        
+        stalacs[i].xOctave=0;
+        stalacs[i].zOctave=0;
         
     }
     maxHeight=10*width;
@@ -205,9 +214,13 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    cerr << posNode.getPosition() << endl;
+    
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
     
+    //Call the chord triggering function
+    triggerChord();
     
     //Update filter cutoff based on sphere height
     lpf.setResonance(10*userHeight,0.5);
@@ -520,18 +533,18 @@ void ofApp::triggerChord(){
     
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn){
-        if (posNode.getX()==stalacs[i].cyl.getX()){
-            //Play note 1 of x chord
-            stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
-            //Play not 2 of x chord
-            stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
-            }
-        if (posNode.getZ()==stalacs[i].cyl.getZ()){
-            //Play note 1 of z chord
-            stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
-            //Play not 2 of z chord
-            stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
-            }
+            if (abs(posNode.getX()-stalacs[i].cyl.getX())<10){
+                //Play note 1 of x chord
+                stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
+                //Play not 2 of x chord
+                stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
+                }
+            if (abs(posNode.getZ()-stalacs[i].cyl.getZ())<10){
+                //Play note 1 of z chord
+                stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
+                //Play not 2 of z chord
+                stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
+                }
         }
     }
     
@@ -617,7 +630,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    float gain=50;
+    float gain=100;
     int octaveScale=3;
     
     //Manual camer pan amount

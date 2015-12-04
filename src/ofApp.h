@@ -18,7 +18,7 @@
 #define ROOM_HEIGHT 2000
 #define ROOM_WIDTH  6000
 #define ROOM_DEPTH  3000
-#define NUM_LINES   50
+#define NUM_LINES   40
 
 #define NUM_CAMS    3
 #define MAX_STALAC  16
