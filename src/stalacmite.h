@@ -8,6 +8,13 @@
 
 #ifndef stalacmite_h
 #define stalacmite_h
+#include "ofMain.h"
+#include "ofApp.h"
+#include "ofxMaxim.h"
+#include "maxiGrains.h"
+#include "ofxOsc.h"
+#include "ofxStk.h"
+#include <sys/time.h>
 
 
 #endif /* stalacmite_h */
@@ -17,15 +24,18 @@ class stalacmite {
     
 public:
     //Methods
-    void update();
-    void draw();
+    void drawStalacs();
     ofVec3f getPosition();
     void perturb();
     
     //Physical properties
-    float x;
-    float y;
-    float rad;
+    ofCylinderPrimitive cyl;
+    ofNode cylPos;
+    ofApp::MusicalNote xChord[2];
+    ofApp::MusicalNote zChord[2];
+    int xOctave;
+    int zOctave;
+    bool isDrawn;
     
     //Constructor
     stalacmite();
@@ -36,3 +46,4 @@ public:
 private:
     
 };
+

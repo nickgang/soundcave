@@ -140,8 +140,8 @@ void ofApp::setup(){
         stalacs[i].zChord[0]=f;
         stalacs[i].zChord[1]=c;
         
-        stalacs[i].xOctave=2;
-        stalacs[i].zOctave=2;
+        stalacs[i].xOctave=3;
+        stalacs[i].zOctave=4;
         
     }
     maxHeight=10*width;
@@ -160,10 +160,10 @@ void ofApp::setup(){
     //Load in samples
     // **************TO DO, add some to this project that will translate well to ambient music****************
     samp.load(ofToDataPath("weapon_short.wav"));
-    samp2.load(ofToDataPath("Egon_5.wav"));
-    samp3.load(ofToDataPath("man_in_me.wav"));
-    samp4.load(ofToDataPath("In_1973.wav"));
-    samp5.load(ofToDataPath("La_Nuit.wav"));
+    //samp2.load(ofToDataPath("Egon_5.wav"));
+    //samp3.load(ofToDataPath("man_in_me.wav"));
+    //samp4.load(ofToDataPath("In_1973.wav"));
+    //samp5.load(ofToDataPath("La_Nuit.wav"));
     
     ofEnableAlphaBlending();
     ofSetupScreen();
@@ -218,8 +218,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-    cerr << "Stalac Position: " << stalacs[0].cylPos.getPosition() << endl;
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
@@ -370,15 +368,26 @@ void ofApp::triggerChord(){
             if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
                 //Play note 1 of x chord
                 stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
-                //Play not 2 of x chord
+                
+                //Play note 2 of x chord
                 stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
+                
+                //Show normals for a frame
+                bDrawNormals=true;
+                
                 }
-            if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
+            
+            else if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
                 //Play note 1 of z chord
                 stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
                 //Play not 2 of z chord
                 stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
+                
+                bDrawNormals=true;
                 }
+            else {
+                bDrawNormals=false;
+            }
         }
     }
     
