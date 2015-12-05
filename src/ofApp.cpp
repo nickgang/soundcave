@@ -315,6 +315,16 @@ void ofApp::draw(){
         ofPopStyle();
         ofPopMatrix();
         
+        for (int i=0;i<MAX_STALAC;i++){
+            if (stalacs[i].isDrawn) {
+                ofPushMatrix();
+                ofTranslate(stalacs[i].cylPos.getPosition());
+                stalacs[i].cyl.draw();
+                ofPopMatrix();
+            }
+        }
+        
+        /*
         //This is drawing a cylinder in the middle of the room
         
         stalacs[0].cylPos.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
@@ -361,6 +371,7 @@ void ofApp::draw(){
         
         ofPopStyle();
         ofPopMatrix();
+         */
     
         //Update target position
         moveTarget("border");
@@ -693,6 +704,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     //if (++current > stretches.size()-1) current = 0;
+    
+    //Position of selector when clicked is position to draw new stalacmite
+    stalacs[nextToDraw].cylPos.setPosition(selector.getPosition());
+    stalacs[nextToDraw].isDrawn=true;
+    
+    //Increment index of stalacmites
+    if (nextToDraw++ > MAX_STALAC) nextToDraw=0;
 }
 
 //--------------------------------------------------------------

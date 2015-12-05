@@ -161,6 +161,9 @@ class ofApp : public ofBaseApp{
     void setupSelector();
     void interpSelector();
     
+    int nextToDraw;
+    ofVec3f nextPos;
+    
     //This is using the real stalacmite class
     //Needs to be implemented elsewhere in ofApp
     //stalacmite stalacs[MAX_STALAC];
