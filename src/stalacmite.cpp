@@ -13,7 +13,7 @@
 #include "time.h"
 
 void stalacmite::drawStalacs() {
-    //This is drawing a cylinder in the middle of the room
+    //This is the code from draw(), will have to alter this significantly
     
     /*
     stalacs[0].cylPos.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
@@ -65,7 +65,12 @@ void stalacmite::drawStalacs() {
 
 }
 
+// Return the position of the stalacmite as a 3d vector
 ofVec3f stalacmite::getPosition(){
     return cylPos.getPosition();
 }
 
+// Perturb the shape in some way, probably with a click
+void stalacmite::perturb() {
+    //Perturb code goes here
+}

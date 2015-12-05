@@ -34,7 +34,7 @@ class ofApp : public ofBaseApp{
 		void draw();
     
         //Reset camera
-        void reset();
+        //void reset();
     
         //Method for drawing background 'room'
         void drawRoom();
