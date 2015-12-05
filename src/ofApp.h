@@ -154,7 +154,7 @@ class ofApp : public ofBaseApp{
     //---------------Cylinder Stuff---------------------
     
     //May not need this node
-    ofNode selctNode;
+    ofNode selectNode;
     
     //Plane that will determine where to pop up a new stalacmite
     ofPlanePrimitive selector;

@@ -971,9 +971,9 @@
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				01CD338C1C0663950075FCF1 /* stalacmite.h */,
 				013C44541C1244940094E672 /* stalacmite.cpp */,
-				013C44501C1231CE0094E672 /* movements.cpp */,
 				013C44521C1235DD0094E672 /* drawFuncs.cpp */,
 				01F82B111C1367EA00418F5B /* selector.cpp */,
+				013C44501C1231CE0094E672 /* movements.cpp */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 			);
 			path = src;

@@ -230,6 +230,10 @@ void ofApp::update(){
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
     
+    //Update position of selector
+    selector.setPosition(selectNode.getPosition());
+    cerr << selector.getPosition() << endl;
+    
     //Call the chord triggering function
     triggerChord();
     
@@ -299,7 +303,15 @@ void ofApp::draw(){
     //Draw the room
     drawRoom();
         
+        //Some code to make the selector look right
+        ofPushMatrix();
+        ofPushStyle();
+        ofRotateZ(90);
+        ofSetColor(255);
         selector.draw();
+        
+        ofPopStyle();
+        ofPopMatrix();
         
         //This is drawing a cylinder in the middle of the room
         
@@ -595,6 +607,22 @@ void ofApp::keyPressed(int key){
                 c.voiceTag = voicer->noteOn(c.noteNumber+12*(octaveScale+1),gain);
                 fDown=true;
             }
+            break;
+            
+        //Moving the selector TO DO, set boundaries as room walls
+        case 'w':
+            //Update the node tracking selector position
+            //We set the selector plane to this point in update
+            selectNode.setPosition(selectNode.getX()+10,selectNode.getY(),selectNode.getZ());
+            break;
+        case 's':
+            selectNode.setPosition(selectNode.getX()-10,selectNode.getY(),selectNode.getZ());
+            break;
+        case 'd':
+            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()+10);
+            break;
+        case 'a':
+            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-10);
             break;
             
             
