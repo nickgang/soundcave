@@ -230,9 +230,8 @@ void ofApp::update(){
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
     
-    //Update position of selector
-    selector.setPosition(selectNode.getPosition());
-    cerr << selector.getPosition() << endl;
+    //Update position of selector with some interpolation
+    interpSelector();
     
     //Call the chord triggering function
     triggerChord();
@@ -306,7 +305,10 @@ void ofApp::draw(){
         //Some code to make the selector look right
         ofPushMatrix();
         ofPushStyle();
-        ofRotateZ(90);
+        
+        ofTranslate(selector.getPosition());
+        ofRotateX(90);
+        ofTranslate(-1*selector.getPosition());
         ofSetColor(255);
         selector.draw();
         
@@ -505,6 +507,8 @@ void ofApp::keyPressed(int key){
     float gain=100;
     int octaveScale=3;
     
+    float selectMove = 50;
+    
     //Manual camer pan amount
     float manPan=5;
     float manTilt=5;
@@ -613,16 +617,16 @@ void ofApp::keyPressed(int key){
         case 'w':
             //Update the node tracking selector position
             //We set the selector plane to this point in update
-            selectNode.setPosition(selectNode.getX()+10,selectNode.getY(),selectNode.getZ());
+            selectNode.setPosition(selectNode.getX()+selectMove,selectNode.getY(),selectNode.getZ());
             break;
         case 's':
-            selectNode.setPosition(selectNode.getX()-10,selectNode.getY(),selectNode.getZ());
+            selectNode.setPosition(selectNode.getX()-selectMove,selectNode.getY(),selectNode.getZ());
             break;
         case 'd':
-            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()+10);
+            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()+selectMove);
             break;
         case 'a':
-            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-10);
+            selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-selectMove);
             break;
             
             

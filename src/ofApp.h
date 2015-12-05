@@ -159,6 +159,7 @@ class ofApp : public ofBaseApp{
     //Plane that will determine where to pop up a new stalacmite
     ofPlanePrimitive selector;
     void setupSelector();
+    void interpSelector();
     
     //This is using the real stalacmite class
     //Needs to be implemented elsewhere in ofApp

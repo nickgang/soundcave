@@ -25,3 +25,19 @@ void ofApp::setupSelector() {
     
     selector.set(width*2,width*2);
 }
+
+void ofApp::interpSelector() {
+    
+    //Get interpolated point for current frame
+    float x = selector.getX()+(selectNode.getX()-selector.getX())*slew;
+    float y = selector.getY()+(selectNode.getY()-selector.getY())*slew;
+    float z = selector.getZ()+(selectNode.getZ()-selector.getZ())*slew;
+    
+    //Store these in 3d vector
+    ofVec3f interpCoords;
+    interpCoords.set(x,y,z);
+    
+    //Set selector position to this point
+    selector.setPosition(interpCoords);
+
+}
