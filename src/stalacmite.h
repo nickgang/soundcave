@@ -24,7 +24,8 @@ class stalacmite {
     
 public:
     //Methods
-    void drawStalacs();
+    void drawStalac();
+    void killStalac();
     ofVec3f getPosition();
     void perturb();
     

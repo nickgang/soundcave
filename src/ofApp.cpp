@@ -1,16 +1,18 @@
 #include "ofApp.h"
-#include "maximilian.h"/* include the maximilian library */
+#include "maximilian.h" //Granular library
 #include "time.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    // Load fonts for the menu screen
     title.loadFont("Alfphabet-IV.ttf", 30);
     subTitle.loadFont("Alfphabet-IV.ttf", 18);
     
     ofEnableDepthTest();
     ofEnableSmoothing();
     
-    // Menu screen on by default
+    // Menu screen comes up on
     menuScreen = true;
     
     // Try drawing this in setup to reduce blank screen time
@@ -124,6 +126,12 @@ void ofApp::setup(){
     // the light highlight of the material //
     material.setSpecularColor(ofColor(255, 255, 255, 255));
     //--------------------------------------------------------------
+    
+    //----------Selector Setup--------------------------------------
+    setupSelector();
+    
+    //--------------------------------------------------------------
+    
     
     //----------Cylinder Setup--------------------------------------
     
@@ -290,6 +298,8 @@ void ofApp::draw(){
 
     //Draw the room
     drawRoom();
+        
+        selector.draw();
         
         //This is drawing a cylinder in the middle of the room
         

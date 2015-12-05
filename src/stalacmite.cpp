@@ -12,8 +12,20 @@
 #include "maximilian.h"/* include the maximilian library */
 #include "time.h"
 
-void stalacmite::drawStalacs() {
-    //This is the code from draw(), will have to alter this significantly
+stalacmite::stalacmite()
+{
+    xOctave=2;
+    zOctave=2;
+    isDrawn=false;
+    
+}
+
+void stalacmite::drawStalac() {
+    
+    //When this is called, draw the cylinder and change the bool value
+    cyl.draw();
+    isDrawn=true;
+    
     
     /*
     stalacs[0].cylPos.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
@@ -63,6 +75,11 @@ void stalacmite::drawStalacs() {
     ofPopMatrix();
     */
 
+}
+
+// Slowly kill stalac when prompted
+void stalacmite::killStalac() {
+    //Code for killing stalac
 }
 
 // Return the position of the stalacmite as a 3d vector

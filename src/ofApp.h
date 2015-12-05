@@ -152,9 +152,22 @@ class ofApp : public ofBaseApp{
     //--------------------------------------------------
     
     //---------------Cylinder Stuff---------------------
+    
+    //May not need this node
+    ofNode selctNode;
+    
+    //Plane that will determine where to pop up a new stalacmite
+    ofPlanePrimitive selector;
+    void setupSelector();
+    
+    //This is using the real stalacmite class
+    //Needs to be implemented elsewhere in ofApp
+    //stalacmite stalacs[MAX_STALAC];
+    
     float maxHeight;
     bool isGrowing;
     
+    // Old stalacmite struct, need to get rid of this
     struct Stalacmite {
         ofCylinderPrimitive cyl;
         ofNode cylPos;
