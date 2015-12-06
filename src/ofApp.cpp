@@ -429,16 +429,28 @@ void ofApp::draw(){
 
 //-----------Trigger Chord Function-----------------------------
 void ofApp::triggerChord(){
-    float gain=50;
+    
+    // Calculate distance from sphere to each stalacmite
+    float distances[MAX_STALAC][2];
+    for (int i=0;i<MAX_STALAC;i++){
+        //Fill distances matrix with euclidean distance to stalacs in x and z direction
+        distances[i][0]=sqrt((posNode.getX()*posNode.getX())+(stalacs[i].cylPos.getX())*(stalacs[i].cylPos.getX()));
+        distances[i][1]=sqrt((posNode.getZ()*posNode.getZ())+(stalacs[i].cylPos.getZ())*(stalacs[i].cylPos.getZ()));
+    }
+    
+    //Gain factor and epsilon for intersecting sphere and stalacmite
+    float gain=100;
+    float eps=0.0001;
     
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn){
             if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
+                //Setting relative gain of notes to 1/distance
                 //Play note 1 of x chord
-                stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain);
+                stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
                 
                 //Play note 2 of x chord
-                stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
+                stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
                 
                 //Show normals for a frame
                 bDrawNormals = !bDrawNormals;
@@ -446,12 +458,14 @@ void ofApp::triggerChord(){
                 }
             
             else if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
+                //Setting relative gain of notes to 1/distance
                 //Play note 1 of z chord
-                stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain);
+                stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
                 //Play not 2 of z chord
-                stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
+                stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
                 
-                
+                //Show normals for a frames
+                bDrawNormals = !bDrawNormals;
                 }
         }
     }
@@ -600,6 +614,18 @@ void ofApp::keyPressed(int key){
         case '.':
             userHeight+=yInc;
             break;
+            
+        // Change speed of sphere
+        case '=':
+            xInc+=5;
+            zInc+=5;
+            break;
+        case '-':
+            xInc-=5;
+            zInc-=5;
+            break;
+            
+        
         //For camera stuff
         case '1':
             currentCam=0;
