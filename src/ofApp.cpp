@@ -318,8 +318,41 @@ void ofApp::draw(){
         for (int i=0;i<MAX_STALAC;i++){
             if (stalacs[i].isDrawn) {
                 ofPushMatrix();
-                ofTranslate(stalacs[i].cylPos.getPosition());
+                ofPushStyle();
+                ofDisableAlphaBlending();
+                ofSetColor(255);
+                ofSetCylinderResolution(6,6);
+                
+                ofTranslate(stalacs[i].cylPos.getX(),0,stalacs[i].cylPos.getZ());
                 stalacs[i].cyl.draw();
+                
+                float currentHeight = stalacs[i].cyl.getHeight();
+                
+                if (currentHeight < maxHeight*0.9 && isGrowing){
+                    stalacs[i].cyl.setHeight(currentHeight+(maxHeight-currentHeight)*(slew*0.05));
+                    
+                    //update y of the cylPos node with the changing height
+                    stalacs[i].cylPos.setPosition(stalacs[i].cylPos.getX(),stalacs[i].cyl.getHeight(),stalacs[i].cylPos.getZ());
+                }
+                else if (currentHeight>0.5*maxHeight) {
+                    stalacs[i].cyl.setHeight(currentHeight-(currentHeight)*(slew*0.05));
+                    stalacs[i].cyl.draw();
+                    
+                    //update y of the cylPos node with the changing height
+                    stalacs[i].cylPos.setPosition(stalacs[i].cylPos.getX(),stalacs[i].cyl.getHeight(),stalacs[i].cylPos.getZ());
+                    
+                    isGrowing=false;
+                }
+                else {
+                    isGrowing=true;
+                    stalacs[i].cyl.draw();
+                    
+                    //update y of the cylPos node with the changing height
+                    stalacs[i].cylPos.setPosition(stalacs[i].cylPos.getX(),stalacs[i].cyl.getHeight(),stalacs[i].cylPos.getZ());
+                }
+
+                
+                ofPopStyle();
                 ofPopMatrix();
             }
         }
@@ -408,7 +441,7 @@ void ofApp::triggerChord(){
                 stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain);
                 
                 //Show normals for a frame
-                bDrawNormals=true;
+                bDrawNormals = !bDrawNormals;
                 
                 }
             
@@ -418,11 +451,8 @@ void ofApp::triggerChord(){
                 //Play not 2 of z chord
                 stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain);
                 
-                bDrawNormals=true;
+                
                 }
-            else {
-                bDrawNormals=false;
-            }
         }
     }
     
