@@ -32,8 +32,8 @@ public:
     //Physical properties
     ofCylinderPrimitive cyl;
     ofNode cylPos;
-    ofApp::MusicalNote xChord[2];
-    ofApp::MusicalNote zChord[2];
+    char xChord[2];
+    char zChord[2];
     int xOctave;
     int zOctave;
     bool isDrawn;

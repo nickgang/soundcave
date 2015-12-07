@@ -18,6 +18,7 @@ void ofApp::setup(){
     // Try drawing this in setup to reduce blank screen time
     drawMenuScreen();
     
+    /*
     //----------STK setup ---------------------------------------
     stk::Stk::setRawwavePath(ofToDataPath("rawwaves",true));
     
@@ -47,6 +48,7 @@ void ofApp::setup(){
     
     cDown=false;
     fDown=false;
+    */
     
     //-----------------------------------------------------------
     
@@ -142,11 +144,15 @@ void ofApp::setup(){
         
         stalacs[i].isDrawn = false;
         
+        /*
+        
         stalacs[i].xChord[0]=c;
         stalacs[i].xChord[1]=g;
         
         stalacs[i].zChord[0]=f;
         stalacs[i].zChord[1]=c;
+         
+        */
         
         stalacs[i].xOctave=3;
         stalacs[i].zOctave=4;
@@ -237,7 +243,7 @@ void ofApp::update(){
     triggerChord();
     
     //Update filter cutoff based on sphere height
-    lpf.setResonance(10*userHeight,0.5);
+    //lpf.setResonance(10*userHeight,0.5);
     
     //Update height of the target (if it has changed)
     target.setPosition(target.getX(),userHeight,target.getZ());
@@ -447,10 +453,10 @@ void ofApp::triggerChord(){
             if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
                 //Setting relative gain of notes to 1/distance
                 //Play note 1 of x chord
-                stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
+                //stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
                 
                 //Play note 2 of x chord
-                stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
+                //stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
                 
                 //Show normals for a frame
                 bDrawNormals = !bDrawNormals;
@@ -460,9 +466,9 @@ void ofApp::triggerChord(){
             else if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
                 //Setting relative gain of notes to 1/distance
                 //Play note 1 of z chord
-                stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
+                //stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
                 //Play not 2 of z chord
-                stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
+                //stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
                 
                 //Show normals for a frames
                 bDrawNormals = !bDrawNormals;
@@ -482,17 +488,17 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     
     //----------Stk output stuff--------------------------------------
     
-    stk::StkFrames frames(bufferSize,2);
-    stk::StkFrames value = voicer->tick(frames);
+    //stk::StkFrames frames(bufferSize,2);
+    //stk::StkFrames value = voicer->tick(frames);
     
     
     //Send bell through filter
-    lpf.tick(value);
+    //lpf.tick(value);
     
     //Send filtered bell through the reverb
-    stk::StkFrames reverbOut(bufferSize,2);
-    reverb.tick(value,reverbOut,0,0);
-    reverbOut.getChannel(0,value,0);
+    //stk::StkFrames reverbOut(bufferSize,2);
+    //reverb.tick(value,reverbOut,0,0);
+    //reverbOut.getChannel(0,value,0);
     
     
     
@@ -517,15 +523,15 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
         //play result
         if (playGrains){
             mymix.stereo(wave, outputs, 0.5);
-            output[i*nChannels    ] = outputs[0] + value(i,0); /* You may end up with lots of outputs. add them here */
-            output[i*nChannels + 1] = outputs[1] + value(i,0);
+            output[i*nChannels    ] = outputs[0]; /* You may end up with lots of outputs. add them here */
+            output[i*nChannels + 1] = outputs[1];
         
             temp = (outputs[0] + outputs[1])/2;
             avgRMS= avgRMS+temp;
         }
         else if(!playGrains) {
-            output[i*nChannels] = value(i,0);
-            output[i*nChannels + 1] = value(i,0);
+            output[i*nChannels] = 0;
+            output[i*nChannels + 1] = 0;
         }
 
         // Set wallBuffer to the audio signal we are hearing
@@ -657,25 +663,25 @@ void ofApp::keyPressed(int key){
         //STK test stuff
         case 'z':
             if(!cDown){
-                c.voiceTag = voicer->noteOn(c.noteNumber+12*octaveScale, gain);
+                //c.voiceTag = voicer->noteOn(c.noteNumber+12*octaveScale, gain);
                 //ds.voiceTag = voicer->noteOn(ds.noteNumber+12*octaveScale, gain);
-                g.voiceTag = voicer->noteOn(g.noteNumber+12*octaveScale, gain);
+                //g.voiceTag = voicer->noteOn(g.noteNumber+12*octaveScale, gain);
                 cDown=true;
             }
             break;
         case 'x':
             if(!dsDown) {
-                ds.voiceTag = voicer->noteOn(ds.noteNumber+12*octaveScale,gain);
+                //ds.voiceTag = voicer->noteOn(ds.noteNumber+12*octaveScale,gain);
                 //fs.voiceTag = voicer->noteOn(fs.noteNumber+12*octaveScale,gain);
-                as.voiceTag = voicer->noteOn(as.noteNumber+12*(octaveScale+1),gain);
+                //as.voiceTag = voicer->noteOn(as.noteNumber+12*(octaveScale+1),gain);
                 dsDown=true;
             }
             break;
         case 'c':
             if(!fDown) {
-                f.voiceTag = voicer->noteOn(f.noteNumber+12*octaveScale,gain);
+                //f.voiceTag = voicer->noteOn(f.noteNumber+12*octaveScale,gain);
                 //a.voiceTag = voicer->noteOn(a.noteNumber+12*octaveScale,gain);
-                c.voiceTag = voicer->noteOn(c.noteNumber+12*(octaveScale+1),gain);
+                //c.voiceTag = voicer->noteOn(c.noteNumber+12*(octaveScale+1),gain);
                 fDown=true;
             }
             break;
@@ -707,21 +713,21 @@ void ofApp::keyReleased(int key){
     int octaveScale = 3;
     switch (key){
         case 'z':
-            voicer->noteOff(c.noteNumber+12*octaveScale,gain);
+            //voicer->noteOff(c.noteNumber+12*octaveScale,gain);
             //voicer->noteOff(ds.noteNumber+12*octaveScale,gain);
-            voicer->noteOff(g.noteNumber+12*octaveScale,gain);
+            //voicer->noteOff(g.noteNumber+12*octaveScale,gain);
             cDown= false;
             break;
         case 'x':
-            voicer->noteOff(ds.noteNumber+12*octaveScale,gain);
+            //voicer->noteOff(ds.noteNumber+12*octaveScale,gain);
             //voicer->noteOff(fsx.noteNumber+12*octaveScale,gain);
-            voicer->noteOff(as.noteNumber+12*(octaveScale+1),gain);
+            //voicer->noteOff(as.noteNumber+12*(octaveScale+1),gain);
             dsDown=false;
             break;
         case 'c':
-            voicer->noteOff(f.noteNumber+12*octaveScale,gain);
+            //voicer->noteOff(f.noteNumber+12*octaveScale,gain);
             //voicer->noteOff(a.noteNumber+12*octaveScale,gain);
-            voicer->noteOff(c.noteNumber+12*(octaveScale+1),gain);
+            //voicer->noteOff(c.noteNumber+12*(octaveScale+1),gain);
             fDown=false;
             break;
     }

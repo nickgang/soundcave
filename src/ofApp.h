@@ -4,7 +4,7 @@
 #include "ofxMaxim.h"
 #include "maxiGrains.h"
 #include "ofxOsc.h"
-#include "ofxStk.h"
+//#include "ofxStk.h"
 #include "ofxTonic.h"
 #include <sys/time.h>
 
@@ -96,6 +96,7 @@ class ofApp : public ofBaseApp{
     bool playGrains;
     
     //---------------Stk stuff---------------------------
+    /*
     struct MusicalNote {
         stk::StkFloat noteNumber;
         long voiceTag;
@@ -105,7 +106,10 @@ class ofApp : public ofBaseApp{
     stk::Voicer *voicer;
     stk::TwoPole lpf;
     
+    
     MusicalNote c,cs,d,ds,e,f,fs,g,gs,a,as,b;
+    */
+    
     bool cDown;
     bool dsDown;
     bool fDown;
@@ -176,8 +180,8 @@ class ofApp : public ofBaseApp{
     struct Stalacmite {
         ofCylinderPrimitive cyl;
         ofNode cylPos;
-        MusicalNote xChord[2];
-        MusicalNote zChord[2];
+        char xChord[2];
+        char zChord[2];
         int xOctave;
         int zOctave;
         bool isDrawn;
