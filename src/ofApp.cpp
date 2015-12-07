@@ -55,7 +55,7 @@ void ofApp::setup(){
     panInc = 90;
     boomInc = 1;
     wallCounter = 0;
-    margin = 400;
+    margin = 600;
     
     //Sets default starting camera
     currentCam=0;
