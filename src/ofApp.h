@@ -5,6 +5,7 @@
 #include "maxiGrains.h"
 #include "ofxOsc.h"
 #include "ofxStk.h"
+#include "ofxTonic.h"
 #include <sys/time.h>
 
 #define HOST "localhost"
