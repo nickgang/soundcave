@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "maximilian.h" //Granular library
+#include "ofxTonic.h"
 #include "time.h"
 
 //--------------------------------------------------------------
@@ -51,13 +52,6 @@ void ofApp::setup(){
     */
     
     //--------------------------------------------------------------
-    
-    //-----------------------Tonic Setup----------------------------
-    
-    for (int i=0;i<MAX_STALAC;i++) {
-        //Generator
-    }
-    
     
     //----------Stuff for the cameras-------------------------------
     dollyInc = 8;

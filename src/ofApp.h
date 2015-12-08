@@ -24,6 +24,7 @@
 #define NUM_CAMS    3
 #define MAX_STALAC  16
 
+using namespace Tonic;
 
 typedef hannWinFunctor grainPlayerWin;
 
@@ -54,6 +55,7 @@ class ofApp : public ofBaseApp{
     
         void audioOut(float * output, int bufferSize, int nChannels);
         void audioIn(float * input, int bufferSize, int nChannels);
+    
     
     //Vector to store buffers used to draw waveforms in walls
     vector<float> wallBuffer;
@@ -118,7 +120,19 @@ class ofApp : public ofBaseApp{
     
     //-----------------Tonic Stuff-----------------------
     
-    Tonic::ofxTonicSynth synthVoice[MAX_STALAC];
+    // Instance of main tonic synth class
+    Tonic::ofxTonicSynth synth;
+    
+    //Pitch array
+    vector<int> pitches;
+    vector<string> midiVect;
+    vector<string> trigVect;
+    
+    //Mixer for the output
+    Mixer sawMix;
+    
+    void setupTonic();
+    void triggerTonic();
     
     
     //---- Lots of stuff for the user position ball -----

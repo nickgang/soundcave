@@ -62,6 +62,7 @@
 		01908DCC1C1641EA00E8AF38 /* Synth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01908D931C1641EA00E8AF38 /* Synth.cpp */; settings = {ASSET_TAGS = (); }; };
 		01908DCD1C1641EA00E8AF38 /* TableLookupOsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01908D951C1641EA00E8AF38 /* TableLookupOsc.cpp */; settings = {ASSET_TAGS = (); }; };
 		01908DCE1C1641EA00E8AF38 /* TonicFrames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01908D981C1641EA00E8AF38 /* TonicFrames.cpp */; settings = {ASSET_TAGS = (); }; };
+		01F28EA01C16A99200479488 /* tonicStuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F28E9F1C16A99200479488 /* tonicStuff.cpp */; settings = {ASSET_TAGS = (); }; };
 		01F82B121C1367EA00418F5B /* selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F82B111C1367EA00418F5B /* selector.cpp */; settings = {ASSET_TAGS = (); }; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		0686C38EE993C67B96002FA1 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B053B6F1252BCFCFF0F59AC /* kiss_fft.c */; };
@@ -263,6 +264,7 @@
 		01908D9A1C1641EA00E8AF38 /* TriangleWave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriangleWave.h; sourceTree = "<group>"; };
 		01908D9B1C1641EA00E8AF38 /* Tonic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tonic.h; sourceTree = "<group>"; };
 		01CD338C1C0663950075FCF1 /* stalacmite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stalacmite.h; sourceTree = "<group>"; };
+		01F28E9F1C16A99200479488 /* tonicStuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tonicStuff.cpp; sourceTree = "<group>"; };
 		01F82B111C1367EA00418F5B /* selector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = selector.cpp; sourceTree = "<group>"; };
 		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
 		0A1DAC09F322AE313A40706D /* ofxToggle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxToggle.h; path = ../../../addons/ofxGui/src/ofxToggle.h; sourceTree = SOURCE_ROOT; };
@@ -821,6 +823,7 @@
 				013C44521C1235DD0094E672 /* drawFuncs.cpp */,
 				01F82B111C1367EA00418F5B /* selector.cpp */,
 				013C44501C1231CE0094E672 /* movements.cpp */,
+				01F28E9F1C16A99200479488 /* tonicStuff.cpp */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 			);
 			path = src;
@@ -1028,6 +1031,7 @@
 				01908DB61C1641EA00E8AF38 /* ControlSwitcher.cpp in Sources */,
 				01908DC11C1641EA00E8AF38 /* Mixer.cpp in Sources */,
 				01F82B121C1367EA00418F5B /* selector.cpp in Sources */,
+				01F28EA01C16A99200479488 /* tonicStuff.cpp in Sources */,
 				01908DA81C1641EA00E8AF38 /* ControlDbToLinear.cpp in Sources */,
 				01908DC51C1641EA00E8AF38 /* RectWave.cpp in Sources */,
 				01908DA01C1641EA00E8AF38 /* BufferFiller.cpp in Sources */,
