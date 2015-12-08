@@ -116,6 +116,9 @@ class ofApp : public ofBaseApp{
     
     void triggerChord();
     
+    //-----------------Tonic Stuff-----------------------
+    
+    Tonic::ofxTonicSynth synthVoice[MAX_STALAC];
     
     
     //---- Lots of stuff for the user position ball -----
