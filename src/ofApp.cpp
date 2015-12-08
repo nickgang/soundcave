@@ -77,10 +77,27 @@ void ofApp::setup(){
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
     
-    //Point Light Setup
+    //Point Lighting Setup
     isLit=false;
     ofSetSmoothLighting(true);
-    pointLight.setPosition(0,ROOM_HEIGHT*4,0);
+    pointLight1.setPosition(0,ROOM_HEIGHT*4,0);
+    pointLight2.setPosition(ROOM_WIDTH,ROOM_HEIGHT*4,0);
+    pointLight3.setPosition(ROOM_WIDTH,ROOM_HEIGHT*4,-ROOM_DEPTH);
+    pointLight4.setPosition(0,ROOM_HEIGHT*4,-ROOM_DEPTH);
+    
+    pointLight1.setPointLight();
+    pointLight2.setPointLight();
+    pointLight3.setPointLight();
+    pointLight4.setPointLight();
+    
+    
+    ofVec3f roomMiddle;
+    roomMiddle.set(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
+    
+    pointLight1.lookAt(roomMiddle);
+    pointLight2.lookAt(roomMiddle);
+    pointLight3.lookAt(roomMiddle);
+    pointLight4.lookAt(roomMiddle);
     
     //pointLight.setDiffuseColor( ofFloatColor(.85, .85, .55) );
     //pointLight.setSpecularColor( ofFloatColor(1.f, 1.f, 1.f));
@@ -141,7 +158,7 @@ void ofApp::setup(){
     
     //Initialize all stalacmites to the same parameters for now
     for (int i=0;i<MAX_STALAC;i++){
-        stalacs[i].cyl.set(2*width,0);
+        stalacs[i].cyl.set(width,0);
         
         stalacs[i].isDrawn = false;
         
@@ -264,7 +281,8 @@ void ofApp::update(){
     //Cam2 looks at target from inside the sphere
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
-     
+    
+    
     //Maxmilian Granular stuff (Wekinator)
     
     if (!isTraining) {
@@ -303,7 +321,10 @@ void ofApp::draw(){
     
         
         if (isLit){
-            pointLight.enable();
+            pointLight1.enable();
+            pointLight2.enable();
+            pointLight3.enable();
+            pointLight4.enable();
         }
 
     //Draw the room
@@ -426,7 +447,11 @@ void ofApp::draw(){
     
     ofPopMatrix();
     
-    pointLight.disable();
+    pointLight1.disable();
+    pointLight2.disable();
+    pointLight3.disable();
+    pointLight4.disable();
+    
         
     cam[currentCam].end();
         

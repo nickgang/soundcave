@@ -70,12 +70,15 @@ void ofApp::setupTonic() {
         envTriggers[i] = synth.addParameter(curTrig);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(0.75).decay(1.5).sustain(0).decay(0).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(0.90).decay(1.5).sustain(0).decay(0).trigger(envTriggers[i]).legato(true);
         
     }
     
     //Send all of the tones through a delay
     //Generator toneWithDelay = StereoDelay(0.5, 0.75).input(toneWithEnvelope).wetLevel(0.1).feedback(0.2);
+    
+    synth.setOutputGen(envTones[0]);
+    
     
     //Trying this here for now
     triggerTonic();
@@ -83,10 +86,18 @@ void ofApp::setupTonic() {
 
 void ofApp::triggerTonic() {
     
-    // set a parameter that we created when we defined the synth
-    synth.setParameter("midiNumber", 44 + pitches[0]);
+    //Loop through
+    for (int i=0;i<MAX_STALAC;i++){
+        if (stalacs[i].isDrawn && !isTriggered[i]){
+            synth.setParameter(midiVect[i], 24 + pitches[0]);
+            synth.setParameter(trigVect[i], 1);
+            
+            isTriggered[i]=true;
+        }
+    }
+    
     
     // simply setting the value of a parameter causes that parameter to send a "trigger" message to any
     // using them as triggers
-    synth.setParameter("trigger", 1);
+    
 }

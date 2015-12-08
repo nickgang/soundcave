@@ -154,7 +154,12 @@ class ofApp : public ofBaseApp{
     bool bSplitFaces;
     
     ofMaterial material;
-    ofLight pointLight;
+    
+    ofLight pointLight1;
+    ofLight pointLight2;
+    ofLight pointLight3;
+    ofLight pointLight4;
+    
     bool isLit;
     
     vector<ofMeshFace> triangles;
@@ -204,6 +209,8 @@ class ofApp : public ofBaseApp{
         bool isDrawn;
         
     };
+    
+    bool isTriggered[MAX_STALAC];
     
     Stalacmite stalacs[MAX_STALAC];
     ofNode stalacNode[MAX_STALAC];
