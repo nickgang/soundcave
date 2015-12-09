@@ -124,8 +124,7 @@ class ofApp : public ofBaseApp{
     // Instance of main tonic synth class
     Tonic::ofxTonicSynth synth[MAX_STALAC];
     
-    //Pitch array
-    vector<int> pitches;
+   // Tonic message arrays
     vector<string> midiVect;
     vector<string> trigVect;
     
@@ -208,10 +207,8 @@ class ofApp : public ofBaseApp{
     struct Stalacmite {
         ofCylinderPrimitive cyl;
         ofNode cylPos;
-        char xChord[2];
-        char zChord[2];
-        int xOctave;
-        int zOctave;
+        int pitch;
+        int octave;
         bool isDrawn;
         
     };

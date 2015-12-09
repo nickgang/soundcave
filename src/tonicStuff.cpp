@@ -16,16 +16,6 @@
 void ofApp::setupTonic() {
     //-----------------------Tonic Setup----------------------------
     
-    //Setup vector to hold buffers
-    voice.resize(MAX_STALAC);
-    
-    //Fill pitch vector with chormatic degrees
-    pitches.resize(12);
-    
-    for (int i=0;i<pitches.size();i++) {
-        pitches[i]=i;
-    }
-    
     // create a named parameter on the synth which we can set at runtime
     vector<ControlGenerator> midiNotes;
     midiNotes.resize(MAX_STALAC);
@@ -73,7 +63,7 @@ void ofApp::setupTonic() {
         tones[i] = SawtoothWave().freq(noteFreqs[i]);
         
         //Filter the saws
-        float filtFreq=10000;
+        float filtFreq=12000;
         tones[i] = LPF24().input(tones[i]).Q(3).cutoff(filtFreq);
         
         envTriggers[i] = synth[i].addParameter(trigVect[i]);
@@ -89,10 +79,13 @@ void ofApp::setupTonic() {
     
     summedSaws = outputSum;
     
-    //Send all of the tones through a delay
+    // Send all of the tones through a delay
     Generator toneDelay = StereoDelay(0.5, 0.75).input(summedSaws).wetLevel(0.1).feedback(0.2);
     
-    synth[0].setOutputGen(toneDelay);
+    // Send it through reverb
+    Generator toneReverb = Reverb().input(toneDelay).roomSize(0.7).dryLevel(0.1).wetLevel(0.4);
+    
+    synth[0].setOutputGen(toneReverb);
     
     
     
@@ -103,7 +96,7 @@ void ofApp::triggerTonic() {
     //Loop through
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn && !isTriggered[i]){
-            synth[i].setParameter(midiVect[i], 24 + pitches[0]);
+            synth[i].setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
             synth[i].setParameter(trigVect[i], 1);
             
             

@@ -77,7 +77,7 @@ void ofApp::setup(){
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
     
-    //Point Lighting Setup
+    //Point Lighting Setup, turning lights on by default
     isLit=false;
     ofSetSmoothLighting(true);
     pointLight1.setPosition(0,ROOM_HEIGHT*4,0);
@@ -155,6 +155,7 @@ void ofApp::setup(){
     
     //----------Cylinder Setup--------------------------------------
     
+    int degrees[MAX_STALAC] = {0,3,7,10,14,17,24,27,31,34,38,41,48,51,55,58};
     
     //Initialize all stalacmites to the same parameters for now
     for (int i=0;i<MAX_STALAC;i++){
@@ -162,18 +163,9 @@ void ofApp::setup(){
         
         stalacs[i].isDrawn = false;
         
-        /*
+        stalacs[i].pitch=degrees[i];
         
-        stalacs[i].xChord[0]=c;
-        stalacs[i].xChord[1]=g;
-        
-        stalacs[i].zChord[0]=f;
-        stalacs[i].zChord[1]=c;
-         
-        */
-        
-        stalacs[i].xOctave=3;
-        stalacs[i].zOctave=4;
+        stalacs[i].octave=3;
         
     }
     maxHeight=10*width;
