@@ -74,7 +74,7 @@ void ofApp::setupTonic() {
         
         //Filter the saws
         float filtFreq=10000;
-        tones[i] = LPF24().input(tones[i]).Q(5).cutoff(filtFreq);
+        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(filtFreq);
         
         envTriggers[i] = synth[i].addParameter(trigVect[i]);
         
