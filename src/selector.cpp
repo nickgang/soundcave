@@ -21,9 +21,11 @@ void ofApp::setupSelector() {
     float width = ofGetWidth() * .10;
     
     selectNode.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
-    selector.setPosition(selectNode.getPosition());
     
     selector.set(width*2,width*2);
+    selector.setPosition(selectNode.getPosition());
+    
+    
 }
 
 void ofApp::interpSelector() {

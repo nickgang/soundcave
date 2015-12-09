@@ -73,7 +73,9 @@ void ofApp::setupTonic() {
         curFreq << "cutoff" << (i+1);
         freqVect[i] = curFreq.str();
         
-        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(10000);
+        cutoffs[i]= synth.addParameter(freqVect[i]);
+        
+        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]);
         
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
@@ -118,6 +120,7 @@ void ofApp::triggerTonic() {
 }
 
 void ofApp::updateFilters() {
+    
     // Calculate distance from sphere to each stalacmite
     float distances[MAX_STALAC][2];
     float hypotenuse[MAX_STALAC];
@@ -133,8 +136,10 @@ void ofApp::updateFilters() {
         float eps = 0.0001;
         
         //Send filter cutoff messages to the synth object
-        //synth.setParameter(freqVect[i], (1/(hypotenuse[i]+eps))*15000);
+        synth.setParameter(freqVect[i], (1/(hypotenuse[i]+eps))*15000);
+        
     }
+    cerr << 1/hypotenuse[0];
     
     
     

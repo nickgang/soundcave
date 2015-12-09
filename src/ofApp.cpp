@@ -47,7 +47,7 @@ void ofApp::setup(){
     cam[2].lookAt(target);
     
     //Point Lighting Setup, turning lights on by default
-    isLit=false;
+    isLit=true;
     ofSetSmoothLighting(true);
     pointLight1.setPosition(0,ROOM_HEIGHT*4,0);
     pointLight2.setPosition(ROOM_WIDTH,ROOM_HEIGHT*4,0);
@@ -356,8 +356,8 @@ void ofApp::draw(){
         
 
     
-        //Update target position
-        moveTarget("border");
+    //Update target position
+    moveTarget("border");
 
     ofPushMatrix();
     
@@ -400,23 +400,12 @@ void ofApp::triggerChord(){
         if (stalacs[i].isDrawn){
             if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
                 //Setting relative gain of notes to 1/distance
-                //Play note 1 of x chord
-                //stalacs[i].xChord[0].voiceTag = voicer->noteOn(stalacs[i].xChord[0].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
-                
-                //Play note 2 of x chord
-                //stalacs[i].xChord[1].voiceTag = voicer->noteOn(stalacs[i].xChord[1].noteNumber+12*stalacs[i].xOctave,gain*1/distances[i][0]+eps);
                 
                 //Show normals for a frame
                 bDrawNormals = !bDrawNormals;
-                
                 }
             
             else if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
-                //Setting relative gain of notes to 1/distance
-                //Play note 1 of z chord
-                //stalacs[i].zChord[0].voiceTag = voicer->noteOn(stalacs[i].zChord[0].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
-                //Play not 2 of z chord
-                //stalacs[i].zChord[1].voiceTag = voicer->noteOn(stalacs[i].zChord[1].noteNumber+12*stalacs[i].zOctave,gain*1/distances[i][1]+eps);
                 
                 //Show normals for a frames
                 bDrawNormals = !bDrawNormals;
