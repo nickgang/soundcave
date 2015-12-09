@@ -122,7 +122,7 @@ class ofApp : public ofBaseApp{
     //-----------------Tonic Stuff-----------------------
     
     // Instance of main tonic synth class
-    Tonic::ofxTonicSynth synth[MAX_STALAC];
+    Tonic::ofxTonicSynth synth;
     
    // Tonic message arrays
     vector<string> midiVect;

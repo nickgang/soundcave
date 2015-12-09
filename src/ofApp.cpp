@@ -532,7 +532,7 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     }
     */
     
-    synth[0].fillBufferOfFloats(output, bufferSize, nChannels);
+    synth.fillBufferOfFloats(output, bufferSize, nChannels);
     
     
     for (int i = 0; i < bufferSize; i++){

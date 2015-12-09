@@ -56,7 +56,7 @@ void ofApp::setupTonic() {
         
         trigVect[i] = curTrig.str();
         
-        midiNotes[i] = synth[i].addParameter(midiVect[i]);
+        midiNotes[i] = synth.addParameter(midiVect[i]);
         
         noteFreqs[i] = ControlMidiToFreq().input(midiNotes[i]);
         
@@ -66,7 +66,7 @@ void ofApp::setupTonic() {
         float filtFreq=12000;
         tones[i] = LPF24().input(tones[i]).Q(3).cutoff(filtFreq);
         
-        envTriggers[i] = synth[i].addParameter(trigVect[i]);
+        envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
         envTones[i] = tones[i] * ADSR().attack(0.90).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
@@ -85,7 +85,7 @@ void ofApp::setupTonic() {
     // Send it through reverb
     Generator toneReverb = Reverb().input(toneDelay).roomSize(0.7).dryLevel(0.1).wetLevel(0.4);
     
-    synth[0].setOutputGen(toneReverb);
+    synth.setOutputGen(toneReverb);
     
     
     
@@ -96,8 +96,8 @@ void ofApp::triggerTonic() {
     //Loop through
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn && !isTriggered[i]){
-            synth[i].setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
-            synth[i].setParameter(trigVect[i], 1);
+            synth.setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
+            synth.setParameter(trigVect[i], 1);
             
             
             isTriggered[i]=true;
