@@ -98,24 +98,6 @@ class ofApp : public ofBaseApp{
     bool isTraining;
     bool playGrains;
     
-    //---------------Stk stuff---------------------------
-    /*
-    struct MusicalNote {
-        stk::StkFloat noteNumber;
-        long voiceTag;
-    };
-    
-    stk::NRev reverb;
-    stk::Voicer *voicer;
-    stk::TwoPole lpf;
-    
-    
-    MusicalNote c,cs,d,ds,e,f,fs,g,gs,a,as,b;
-    */
-    
-    bool cDown;
-    bool dsDown;
-    bool fDown;
     
     void triggerChord();
     

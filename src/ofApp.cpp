@@ -19,37 +19,6 @@ void ofApp::setup(){
     // Try drawing this in setup to reduce blank screen time
     drawMenuScreen();
     
-    /*
-    //----------STK setup ---------------------------------------
-    stk::Stk::setRawwavePath(ofToDataPath("rawwaves",true));
-    
-    voicer = new stk::Voicer();
-    reverb.setEffectMix(.3);
-    reverb.setT60(8);
-    
-    lpf.setResonance(2000, 0.5);
-    
-    for (int i=0;i<100;i++) {
-        stk::TubeBell *tBell = new stk::TubeBell;
-        voicer->addInstrument(tBell);
-    }
-    
-    c.noteNumber = 36;
-    cs.noteNumber = 37;
-    d.noteNumber = 38;
-    ds.noteNumber = 39;
-    e.noteNumber = 40;
-    f.noteNumber = 41;
-    fs.noteNumber = 42;
-    g.noteNumber = 43;
-    gs.noteNumber = 44;
-    a.noteNumber = 45;
-    as.noteNumber = 46;
-    b.noteNumber = 47;
-    
-    cDown=false;
-    fDown=false;
-    */
     
     //--------------------------------------------------------------
     
@@ -384,54 +353,7 @@ void ofApp::draw(){
             }
         }
         
-        /*
-        //This is drawing a cylinder in the middle of the room
-        
-        stalacs[0].cylPos.setPosition(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
-        
-        ofPushMatrix();
-        ofTranslate(stalacs[0].cylPos.getPosition());
-        ofPushStyle();
-        ofDisableAlphaBlending();
-        ofSetColor(255);
-        ofSetCylinderResolution(6,6);
-        
-        float currentHeight = stalacs[0].cyl.getHeight();
-        
-        if (currentHeight < maxHeight*0.9 && isGrowing){
-            stalacs[0].cyl.setHeight(currentHeight+(maxHeight-currentHeight)*(slew*0.05));
-            stalacs[0].cyl.draw();
-            
-            //update y of the cylPos node with the changing height
-            stalacs[0].cylPos.setPosition(stalacs[0].cylPos.getX(),stalacs[0].cyl.getHeight(),stalacs[0].cylPos.getZ());
-            
-            stalacs[0].isDrawn = true;
-            }
-        else if (currentHeight>0.5*maxHeight) {
-            stalacs[0].cyl.setHeight(currentHeight-(currentHeight)*(slew*0.05));
-            stalacs[0].cyl.draw();
-            
-            //update y of the cylPos node with the changing height
-            stalacs[0].cylPos.setPosition(stalacs[0].cylPos.getX(),stalacs[0].cyl.getHeight(),stalacs[0].cylPos.getZ());
-            
-            stalacs[0].isDrawn = true;
-            isGrowing=false;
-        }
-        else {
-            isGrowing=true;
-            stalacs[0].cyl.draw();
-            
-            //update y of the cylPos node with the changing height
-            stalacs[0].cylPos.setPosition(stalacs[0].cylPos.getX(),stalacs[0].cyl.getHeight(),stalacs[0].cylPos.getZ());
-            
-            stalacs[0].isDrawn = true;
-        }
-        
-        
-        
-        ofPopStyle();
-        ofPopMatrix();
-         */
+
     
         //Update target position
         moveTarget("border");
@@ -511,26 +433,6 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     float scaleRMS=40;
     avgRMS = 0;
     
-    //----------Stk output stuff--------------------------------------
-    
-    //stk::StkFrames frames(bufferSize,2);
-    //stk::StkFrames value = voicer->tick(frames);
-    
-    //Send bell through filter
-    //lpf.tick(value);
-    
-    //Send filtered bell through the reverb
-    //stk::StkFrames reverbOut(bufferSize,2);
-    //reverb.tick(value,reverbOut,0,0);
-    //reverbOut.getChannel(0,value,0);
-
-    
-    /*Grab a buffer full of the tonic synth
-    for (int i;i<MAX_STALAC;i++){
-        synth[i].fillBufferOfFloats(voice[i],bufferSize,nChannels);
-        
-    }
-    */
     
     synth.fillBufferOfFloats(output, bufferSize, nChannels);
     
@@ -691,32 +593,6 @@ void ofApp::keyPressed(int key){
             isLit = !isLit;
             break;
             
-        //STK test stuff
-        case 'z':
-            if(!cDown){
-                //c.voiceTag = voicer->noteOn(c.noteNumber+12*octaveScale, gain);
-                //ds.voiceTag = voicer->noteOn(ds.noteNumber+12*octaveScale, gain);
-                //g.voiceTag = voicer->noteOn(g.noteNumber+12*octaveScale, gain);
-                cDown=true;
-            }
-            break;
-        case 'x':
-            if(!dsDown) {
-                //ds.voiceTag = voicer->noteOn(ds.noteNumber+12*octaveScale,gain);
-                //fs.voiceTag = voicer->noteOn(fs.noteNumber+12*octaveScale,gain);
-                //as.voiceTag = voicer->noteOn(as.noteNumber+12*(octaveScale+1),gain);
-                dsDown=true;
-            }
-            break;
-        case 'c':
-            if(!fDown) {
-                //f.voiceTag = voicer->noteOn(f.noteNumber+12*octaveScale,gain);
-                //a.voiceTag = voicer->noteOn(a.noteNumber+12*octaveScale,gain);
-                //c.voiceTag = voicer->noteOn(c.noteNumber+12*(octaveScale+1),gain);
-                fDown=true;
-            }
-            break;
-            
         //Moving the selector TO DO, set boundaries as room walls
         case 'w':
             //Update the node tracking selector position
@@ -740,27 +616,9 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    float gain = 50;
-    int octaveScale = 3;
+
     switch (key){
-        case 'z':
-            //voicer->noteOff(c.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(ds.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(g.noteNumber+12*octaveScale,gain);
-            cDown= false;
-            break;
-        case 'x':
-            //voicer->noteOff(ds.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(fsx.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(as.noteNumber+12*(octaveScale+1),gain);
-            dsDown=false;
-            break;
-        case 'c':
-            //voicer->noteOff(f.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(a.noteNumber+12*octaveScale,gain);
-            //voicer->noteOff(c.noteNumber+12*(octaveScale+1),gain);
-            fDown=false;
-            break;
+            //Leaving this here in case I need it
     }
 
 }
