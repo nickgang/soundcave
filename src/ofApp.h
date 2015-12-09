@@ -122,7 +122,7 @@ class ofApp : public ofBaseApp{
     //-----------------Tonic Stuff-----------------------
     
     // Instance of main tonic synth class
-    Tonic::ofxTonicSynth synth;
+    Tonic::ofxTonicSynth synth[MAX_STALAC];
     
     //Pitch array
     vector<int> pitches;
@@ -131,6 +131,11 @@ class ofApp : public ofBaseApp{
     
     //Mixer for the output
     Mixer sawMix;
+    
+    //These will hold buffers for 16 voices
+    vector <float *> voice;
+
+    
     
     void setupTonic();
     void triggerTonic();

@@ -16,6 +16,9 @@
 void ofApp::setupTonic() {
     //-----------------------Tonic Setup----------------------------
     
+    //Setup vector to hold buffers
+    voice.resize(MAX_STALAC);
+    
     //Fill pitch vector with chormatic degrees
     pitches.resize(12);
     
@@ -42,8 +45,12 @@ void ofApp::setupTonic() {
     vector<Tonic::Generator> tones;
     tones.resize(MAX_STALAC);
     
+    //Create generator vector to hold 16 voices post envelope
     vector<Tonic::Generator> envTones;
     envTones.resize(tones.size());
+    
+    Tonic::Adder outputSum;
+    Tonic::Generator summedSaws;
     
     for (int i=0;i<tones.size();i++) {
         
@@ -59,7 +66,7 @@ void ofApp::setupTonic() {
         
         trigVect[i] = curTrig.str();
         
-        midiNotes[i] = synth.addParameter(midiVect[i]);
+        midiNotes[i] = synth[i].addParameter(midiVect[i]);
         
         noteFreqs[i] = ControlMidiToFreq().input(midiNotes[i]);
         
@@ -69,21 +76,26 @@ void ofApp::setupTonic() {
         float filtFreq=10000;
         tones[i] = LPF24().input(tones[i]).Q(5).cutoff(filtFreq);
         
-        envTriggers[i] = synth.addParameter(trigVect[i]);
+        envTriggers[i] = synth[i].addParameter(trigVect[i]);
         
         //Send them through an envelope
         envTones[i] = tones[i] * ADSR().attack(0.90).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
         
+        //synth[i].setOutputGen(envTones[i]);
+        
+        //Mix
+        outputSum.input(envTones[i]);
     }
     
+    summedSaws = outputSum;
+    
     //Send all of the tones through a delay
-    Generator toneDelay = StereoDelay(0.5, 0.75).input(envTones[0]).wetLevel(0.1).feedback(0.2);
+    Generator toneDelay = StereoDelay(0.5, 0.75).input(summedSaws).wetLevel(0.1).feedback(0.2);
     
-    synth.setOutputGen(envTones[0]);
+    synth[0].setOutputGen(toneDelay);
     
     
-    //Trying this here for now
-    //triggerTonic();
+    
 }
 
 void ofApp::triggerTonic() {
@@ -91,8 +103,8 @@ void ofApp::triggerTonic() {
     //Loop through
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn && !isTriggered[i]){
-            synth.setParameter(midiVect[i], 24 + pitches[0]);
-            synth.setParameter(trigVect[i], 1);
+            synth[i].setParameter(midiVect[i], 24 + pitches[0]);
+            synth[i].setParameter(trigVect[i], 1);
             
             
             isTriggered[i]=true;

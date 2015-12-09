@@ -531,9 +531,16 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     //stk::StkFrames reverbOut(bufferSize,2);
     //reverb.tick(value,reverbOut,0,0);
     //reverbOut.getChannel(0,value,0);
+
     
-    //Grab a buffer full of the tonic synth
-    synth.fillBufferOfFloats(output,bufferSize,nChannels);
+    /*Grab a buffer full of the tonic synth
+    for (int i;i<MAX_STALAC;i++){
+        synth[i].fillBufferOfFloats(voice[i],bufferSize,nChannels);
+        
+    }
+    */
+    
+    synth[0].fillBufferOfFloats(output, bufferSize, nChannels);
     
     
     for (int i = 0; i < bufferSize; i++){
@@ -543,9 +550,7 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
          http://www.maximilian.strangeloop.co.uk
          under 'Tutorials'.
          */
-        
-        
-        
+    
         //		wave = stretches[current]->play(speed, grainLength, 5, 0);
         wave = stretches[current]->play(speed, 0.1, 4, 0);
         //		wave = stretches[current]->play2(pos, 0.1, 4);
