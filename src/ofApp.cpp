@@ -216,8 +216,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    //Not sure if this really belongs here
+    //This takes care of updating the audio from tonic
     triggerTonic();
+    updateFilters();
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;

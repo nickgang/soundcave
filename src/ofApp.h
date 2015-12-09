@@ -109,6 +109,7 @@ class ofApp : public ofBaseApp{
    // Tonic message arrays
     vector<string> midiVect;
     vector<string> trigVect;
+    vector<string> freqVect;
     
     //Mixer for the output
     Mixer sawMix;
@@ -120,6 +121,7 @@ class ofApp : public ofBaseApp{
     
     void setupTonic();
     void triggerTonic();
+    void updateFilters();
     
     
     //---- Lots of stuff for the user position ball -----

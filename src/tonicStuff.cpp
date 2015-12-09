@@ -31,6 +31,11 @@ void ofApp::setupTonic() {
     envTriggers.resize(midiNotes.size());
     trigVect.resize(midiNotes.size());
     
+    //Create cuttof freq message for each filter
+    vector<ControlGenerator> cutoffs;
+    cutoffs.resize(midiNotes.size());
+    freqVect.resize(midiNotes.size());
+    
     //Create Vector of Saws sound by the stalacmites
     vector<Tonic::Generator> tones;
     tones.resize(MAX_STALAC);
@@ -63,15 +68,17 @@ void ofApp::setupTonic() {
         tones[i] = SawtoothWave().freq(noteFreqs[i]);
         
         //Filter the saws
-        float filtFreq=12000;
-        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(filtFreq);
+
+        std::ostringstream curFreq;
+        curFreq << "cutoff" << (i+1);
+        freqVect[i] = curFreq.str();
+        
+        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(10000);
         
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
         envTones[i] = tones[i] * ADSR().attack(0.90).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
-        
-        //synth[i].setOutputGen(envTones[i]);
         
         //Mix
         outputSum.input(envTones[i]);
@@ -109,3 +116,29 @@ void ofApp::triggerTonic() {
     // using them as triggers
     
 }
+
+void ofApp::updateFilters() {
+    // Calculate distance from sphere to each stalacmite
+    float distances[MAX_STALAC][2];
+    float hypotenuse[MAX_STALAC];
+    
+    for (int i=0;i<MAX_STALAC;i++){
+        //Fill distances matrix with euclidean distance to stalacs in x and z direction
+        distances[i][0]=sqrt((posNode.getX()*posNode.getX())+(stalacs[i].cylPos.getX())*(stalacs[i].cylPos.getX()));
+        distances[i][1]=sqrt((posNode.getZ()*posNode.getZ())+(stalacs[i].cylPos.getZ())*(stalacs[i].cylPos.getZ()));
+        
+        hypotenuse[i]=sqrt(distances[i][0]*distances[i][0]+distances[i][1]*distances[i][1]);
+        
+        // epsilon
+        float eps = 0.0001;
+        
+        //Send filter cutoff messages to the synth object
+        //synth.setParameter(freqVect[i], (1/(hypotenuse[i]+eps))*15000);
+    }
+    
+    
+    
+    
+}
+
+
