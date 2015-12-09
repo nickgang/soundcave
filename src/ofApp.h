@@ -7,6 +7,7 @@
 //#include "ofxStk.h"
 #include "ofxTonic.h"
 #include <sys/time.h>
+#include <sstream>
 
 #define HOST "localhost"
 #define RECEIVEPORT 12000

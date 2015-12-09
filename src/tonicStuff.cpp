@@ -36,6 +36,7 @@ void ofApp::setupTonic() {
     //Create trigger messages for each ADSR
     vector<ControlGenerator> envTriggers;
     envTriggers.resize(midiNotes.size());
+    trigVect.resize(midiNotes.size());
     
     //Create Vector of Saws sound by the stalacmites
     vector<Tonic::Generator> tones;
@@ -47,15 +48,16 @@ void ofApp::setupTonic() {
     for (int i=0;i<tones.size();i++) {
         
         //We need to concatenate index to these two strings
-        string curMidi = "midiNumber";
-        curMidi += (char) i;
+        std::ostringstream curMidi;
+        curMidi << "midiNumber" << (i+1);
         
-        midiVect[i] = curMidi;
+        //Store the stringstream as a regular string in a vector
+        midiVect[i] = curMidi.str();
         
-        string curTrig = "trigger";
-        curTrig += (char) i;
+        std::ostringstream curTrig;
+        curTrig << "trigger" << (i+1);
         
-        trigVect[i] = curTrig;
+        trigVect[i] = curTrig.str();
         
         midiNotes[i] = synth.addParameter(midiVect[i]);
         
@@ -67,21 +69,21 @@ void ofApp::setupTonic() {
         float filtFreq=10000;
         tones[i] = LPF24().input(tones[i]).Q(5).cutoff(filtFreq);
         
-        envTriggers[i] = synth.addParameter(curTrig);
+        envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(0.90).decay(1.5).sustain(0).decay(0).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(0.90).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
         
     }
     
     //Send all of the tones through a delay
-    //Generator toneWithDelay = StereoDelay(0.5, 0.75).input(toneWithEnvelope).wetLevel(0.1).feedback(0.2);
+    Generator toneDelay = StereoDelay(0.5, 0.75).input(envTones[0]).wetLevel(0.1).feedback(0.2);
     
     synth.setOutputGen(envTones[0]);
     
     
     //Trying this here for now
-    triggerTonic();
+    //triggerTonic();
 }
 
 void ofApp::triggerTonic() {
@@ -91,6 +93,7 @@ void ofApp::triggerTonic() {
         if (stalacs[i].isDrawn && !isTriggered[i]){
             synth.setParameter(midiVect[i], 24 + pitches[0]);
             synth.setParameter(trigVect[i], 1);
+            
             
             isTriggered[i]=true;
         }

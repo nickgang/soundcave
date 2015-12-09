@@ -181,6 +181,10 @@ void ofApp::setup(){
     
     //--------------------------------------------------------------
     
+    //Tonic Setup
+    setupTonic();
+    
+    
     //-------------------Maximilian Setup---------------------------
     
     playGrains=false;
@@ -250,6 +254,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    //Not sure if this really belongs here
+    triggerTonic();
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
@@ -517,7 +524,6 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     //stk::StkFrames frames(bufferSize,2);
     //stk::StkFrames value = voicer->tick(frames);
     
-    
     //Send bell through filter
     //lpf.tick(value);
     
@@ -526,6 +532,8 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     //reverb.tick(value,reverbOut,0,0);
     //reverbOut.getChannel(0,value,0);
     
+    //Grab a buffer full of the tonic synth
+    synth.fillBufferOfFloats(output,bufferSize,nChannels);
     
     
     for (int i = 0; i < bufferSize; i++){
@@ -549,15 +557,15 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
         //play result
         if (playGrains){
             mymix.stereo(wave, outputs, 0.5);
-            output[i*nChannels    ] = outputs[0]; /* You may end up with lots of outputs. add them here */
-            output[i*nChannels + 1] = outputs[1];
+            output[i*nChannels    ] += outputs[0]; /* You may end up with lots of outputs. add them here */
+            output[i*nChannels + 1] += outputs[1];
         
             temp = (outputs[0] + outputs[1])/2;
             avgRMS= avgRMS+temp;
         }
         else if(!playGrains) {
-            output[i*nChannels] = 0;
-            output[i*nChannels + 1] = 0;
+            //output[i*nChannels] = 0;
+            //output[i*nChannels + 1] = 0;
         }
 
         // Set wallBuffer to the audio signal we are hearing
