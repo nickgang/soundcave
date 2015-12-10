@@ -96,8 +96,7 @@ class ofApp : public ofBaseApp{
     bool isTraining;
     bool playGrains;
     
-    
-    void triggerChord();
+    ofSoundPlayer cave;
     
     //-----------------Tonic Stuff-----------------------
     

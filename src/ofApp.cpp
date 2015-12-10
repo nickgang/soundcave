@@ -22,6 +22,11 @@ void ofApp::setup(){
     
     //--------------------------------------------------------------
     
+    // Cave audio
+    cave.loadSound("cave-drips.wav");
+    cave.setLoop(true);
+    
+    
     //----------Stuff for the cameras-------------------------------
     dollyInc = 8;
     panInc = 90;
@@ -68,7 +73,12 @@ void ofApp::setup(){
     pointLight3.lookAt(roomMiddle);
     pointLight4.lookAt(roomMiddle);
     
-    //pointLight.setDiffuseColor( ofFloatColor(.85, .85, .55) );
+    
+    // Make the diffuse light color vaguely blue
+    pointLight1.setDiffuseColor( ofFloatColor(.30, .50, .80) );
+    pointLight2.setDiffuseColor( ofFloatColor(.30, .50, .80) );
+    pointLight3.setDiffuseColor( ofFloatColor(.30, .50, .80) );
+    pointLight4.setDiffuseColor( ofFloatColor(.30, .50, .80) );
     //pointLight.setSpecularColor( ofFloatColor(1.f, 1.f, 1.f));
     
     
@@ -556,6 +566,10 @@ void ofApp::keyPressed(int key){
             break;
         case 'a':
             selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-selectMove);
+            break;
+            
+        case 'z':
+            cave.play();
             break;
             
             
