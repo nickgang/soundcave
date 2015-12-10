@@ -32,6 +32,9 @@ void ofApp::drawMenuScreen(){
     subTitle.drawString("press 'm' to begin",width/4,height/4);
     ofPopStyle();
     
+    instructions.drawString("Use arrow keys to move selector, click to create a stalacmite \n 1,2,3 keys swtich camera view \n 8 key freezes the sphere. \n 0 key sharpens sphere, " ,width/8,3*height/4);
+    
+    
     ofPopStyle();
 }
 

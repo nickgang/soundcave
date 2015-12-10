@@ -63,7 +63,10 @@ class ofApp : public ofBaseApp{
     
     ofTrueTypeFont title;
     ofTrueTypeFont subTitle;
+    ofTrueTypeFont instructions;
+    
     bool menuScreen;
+    bool bInstructions;
     void drawMenuScreen();
 		
     //Some variables for changing sample rate and buffer size
@@ -219,6 +222,10 @@ class ofApp : public ofBaseApp{
     int margin;
     
     void setupCams();
+    void updateCams();
+    void interpCams(float targetFov);
+    float targetPan;
+    float currentPan;
     
     //To be implemented in future version
     void timeWarp();
