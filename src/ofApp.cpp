@@ -418,9 +418,12 @@ void ofApp::keyPressed(int key){
             isTraining=!isTraining;
             //cout << isTraining;
             break;
+            
+        /*Disabling this for 1.0 presentation
         case 'p':
             playGrains = !playGrains;
             break;
+            */
             
         //For user position sphere stuff
         case 'f':
