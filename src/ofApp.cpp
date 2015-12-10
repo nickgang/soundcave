@@ -408,9 +408,13 @@ void ofApp::keyPressed(int key){
         case 'i':
             bInstructions = !bInstructions;
             break;
-            
-        //This one is for Maximilian stuff
+        //Grab a screen shot
         case OF_KEY_RETURN:
+            screenShot.grabScreen(0,0,ofGetWidth(),ofGetHeight());
+            screenShot.saveImage("soundcave.png");
+            break;
+        //This one is for Maximilian stuff
+        case OF_KEY_SHIFT:
             isTraining=!isTraining;
             //cout << isTraining;
             break;

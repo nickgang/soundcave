@@ -65,6 +65,8 @@ class ofApp : public ofBaseApp{
     ofTrueTypeFont subTitle;
     ofTrueTypeFont instructions;
     
+    ofImage screenShot;
+    
     bool menuScreen;
     bool bInstructions;
     void drawMenuScreen();
