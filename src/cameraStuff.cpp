@@ -37,10 +37,11 @@ void ofApp::setupCams() {
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
     
-    //Cam 3 orbits the sphere
-    cam[3].setPosition(posNode.getPosition());
-    cam[3].lookAt(posNode);
-    cam[3].orbit(500,500,500,posNode.getPosition());
+    //Cam 3 is a static top view
+    cam[3].setPosition(ROOM_WIDTH/2,2.5*ROOM_HEIGHT,ROOM_DEPTH/2);
+    centerNode.setPosition(ROOM_WIDTH/2,0, ROOM_HEIGHT/2);
+    cam[3].lookAt(centerNode);
+    cam[3].setFov(70);
     
     //Point Lighting Setup, turning lights on by default
     isLit=true;
@@ -97,9 +98,8 @@ void ofApp::updateCams() {
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
     
-    // Cam 3 looks at sphere while orbiting it
-    cam[3].lookAt(posNode);
-    cam[3].orbit(100,100,500,posNode.getPosition());
+    // Cam 3 doesn't need updating
+
     
 }
 

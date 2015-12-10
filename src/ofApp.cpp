@@ -85,7 +85,7 @@ void ofApp::setup(){
     
     //----------Cylinder Setup--------------------------------------
     
-    int degrees[MAX_STALAC] = {0,3,7,10,2,12,17,15,22,19,29,26,36,33,38,41};
+    int degrees[MAX_STALAC] = {0,7,3,10,2,12,17,15,22,19,29,26,36,33,38,41};
     
     //Initialize all stalacmites to the same parameters for now
     for (int i=0;i<MAX_STALAC;i++){
@@ -428,6 +428,7 @@ void ofApp::keyPressed(int key){
         case '9':
             bDrawNormals = !bDrawNormals;
             break;
+            
         /*For 1.0 performance, disabling wireframe toggle
         case '0':
             bWireframe = !bWireframe;

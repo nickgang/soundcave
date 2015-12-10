@@ -213,6 +213,7 @@ class ofApp : public ofBaseApp{
     ofCamera cam[NUM_CAMS];
     ofCamera singleCam;
     ofNode camNode[NUM_CAMS];
+    ofNode centerNode;
     int currentCam;
     
     float dollyInc;
