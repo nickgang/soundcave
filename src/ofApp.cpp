@@ -231,9 +231,6 @@ void ofApp::update(){
     //Update position of selector with some interpolation
     interpSelector();
     
-    //Call the chord triggering function
-    triggerChord();
-    
     //Update height of the target (if it has changed)
     target.setPosition(target.getX(),userHeight,target.getZ());
     
@@ -383,39 +380,10 @@ void ofApp::draw(){
     
 }
 
-//-----------Trigger Chord Function-----------------------------
-void ofApp::triggerChord(){
-    
-    // Calculate distance from sphere to each stalacmite
-    float distances[MAX_STALAC][2];
-    for (int i=0;i<MAX_STALAC;i++){
-        //Fill distances matrix with euclidean distance to stalacs in x and z direction
-        distances[i][0]=sqrt((posNode.getX()*posNode.getX())+(stalacs[i].cylPos.getX())*(stalacs[i].cylPos.getX()));
-        distances[i][1]=sqrt((posNode.getZ()*posNode.getZ())+(stalacs[i].cylPos.getZ())*(stalacs[i].cylPos.getZ()));
-    }
-    
-    
-    for (int i=0;i<MAX_STALAC;i++){
-        if (stalacs[i].isDrawn){
-            if (abs(posNode.getX()-stalacs[i].cylPos.getX())<10){
-                //Setting relative gain of notes to 1/distance
-                
-                //Show normals for a frame
-                bDrawNormals = !bDrawNormals;
-                }
-            
-            else if (abs(posNode.getZ()-stalacs[i].cylPos.getZ())<10){
-                
-                //Show normals for a frames
-                bDrawNormals = !bDrawNormals;
-                }
-        }
-    }
-    
-}
 
-
-//--------------------------------------------------------------
+//-----------------------------------------------------------------
+// Audio Out
+//-----------------------------------------------------------------
 void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     
     float temp = 0;

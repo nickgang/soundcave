@@ -59,6 +59,9 @@ void ofApp::setupTonic() {
     ControlGenerator LFOrate;
     LFOrate = synth.addParameter("LFOrate");
     
+    ControlGenerator resonance;
+    resonance = synth.addParameter("Res");
+    
     
     for (int i=0;i<tones.size();i++) {
         
@@ -88,7 +91,7 @@ void ofApp::setupTonic() {
         //Filter the saws
         cutoffs[i]= synth.addParameter(freqVect[i]);
         
-        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]+LFO*75*SineWave().freq(LFOrate));
+        tones[i] = LPF24().input(tones[i]).Q(resonance).cutoff(cutoffs[i]+LFO*75*SineWave().freq(LFOrate));
         
         releases[i] = synth.addParameter(relVect[i]);
         envTriggers[i] = synth.addParameter(trigVect[i]);
@@ -127,9 +130,6 @@ void ofApp::triggerTonic() {
             synth.setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
             synth.setParameter(trigVect[i], 1);
             
-            cerr << userHeight/10000 << endl;
-            cerr << userHeight << endl;
-            
             isTriggered[i]=true;
         }
         
@@ -150,6 +150,14 @@ void ofApp::triggerTonic() {
     else if (!bFill) {
         synth.setParameter("LFO",0);
     }
+    
+    if (bDrawNormals) {
+        synth.setParameter("Res",5.5);
+    }
+    else if (!bDrawNormals) {
+        synth.setParameter("Res",2.0);
+    }
+    
     
     
     // simply setting the value of a parameter causes that parameter to send a "trigger" message to any
