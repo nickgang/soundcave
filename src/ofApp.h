@@ -218,6 +218,8 @@ class ofApp : public ofBaseApp{
     
     int margin;
     
+    void setupCams();
+    
     //To be implemented in future version
     void timeWarp();
     bool bTimewarp;
