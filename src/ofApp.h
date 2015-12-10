@@ -37,9 +37,6 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
     
-        //Reset camera
-        //void reset();
-    
         //Method for drawing background 'room'
         void drawRoom();
         //Method for drawing user position sphere
@@ -198,7 +195,6 @@ class ofApp : public ofBaseApp{
         
     };
     
-    int numPlaying;
     bool isTriggered[MAX_STALAC];
     
     Stalacmite stalacs[MAX_STALAC];

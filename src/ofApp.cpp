@@ -222,16 +222,6 @@ void ofApp::update(){
     updateFilters();
     
     
-    //Figure out how many voices are playing (we need this for normalization)
-    
-    numPlaying=0;
-    
-    for (int i=0;i<MAX_STALAC;i++){
-        if (stalacs[i].isDrawn){
-            numPlaying++;
-        }
-    }
-    
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
     
@@ -240,9 +230,6 @@ void ofApp::update(){
     
     //Call the chord triggering function
     triggerChord();
-    
-    //Update filter cutoff based on sphere height
-    //lpf.setResonance(10*userHeight,0.5);
     
     //Update height of the target (if it has changed)
     target.setPosition(target.getX(),userHeight,target.getZ());
@@ -404,9 +391,6 @@ void ofApp::triggerChord(){
         distances[i][1]=sqrt((posNode.getZ()*posNode.getZ())+(stalacs[i].cylPos.getZ())*(stalacs[i].cylPos.getZ()));
     }
     
-    //Gain factor and epsilon for intersecting sphere and stalacmite
-    float gain=100;
-    float eps=0.0001;
     
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn){
@@ -440,12 +424,6 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     
     
     for (int i = 0; i < bufferSize; i++){
-        
-        /* Stick your maximilian 'play()' code in here ! Declare your objects in testApp.h.
-         For information on how maximilian works, take a look at the example code at
-         http://www.maximilian.strangeloop.co.uk
-         under 'Tutorials'.
-         */
     
         //		wave = stretches[current]->play(speed, grainLength, 5, 0);
         wave = stretches[current]->play(speed, 0.1, 4, 0);
@@ -464,24 +442,17 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
             output[i*nChannels + 1] += outputs[1];
             
             //Normalizing by dividing by number of voices playing
-            output[i*nChannels ] /= numPlaying;
-            output[i*nChannels +1] /= numPlaying;
+            //output[i*nChannels ] /= numPlaying;
+            //output[i*nChannels +1] /= numPlaying;
             
             temp = (outputs[0] + outputs[1])/2;
             avgRMS= avgRMS+temp;
         }
         else if(!playGrains) {
             //Normalizing by dividing by number of voices playing
-            output[i*nChannels ] /= numPlaying;
-            output[i*nChannels +1] /= numPlaying;
+            //output[i*nChannels ] /= numPlaying;
+            //output[i*nChannels +1] /= numPlaying;
         }
-
-        // Set wallBuffer to the audio signal we are hearing
-        // We will assign this to make waveforms in the walls in drawRoom
-        
-        //Interpolate the signal
-        
-        /* You may end up with lots of outputs. add them here */
     }
     
     //Update size of user position sphere with RMS level

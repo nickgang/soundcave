@@ -82,10 +82,11 @@ void ofApp::setupTonic() {
         //Send them through an envelope
         envTones[i] = tones[i] * ADSR().attack(1.0).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
         
-        //Mix
+        //Mix each subequent signal with an adder
         outputSum.input(envTones[i]);
     }
     
+    //Store the sum in a generator
     summedSaws = outputSum;
     
     // Send all of the tones through a delay
@@ -94,7 +95,7 @@ void ofApp::setupTonic() {
     // Send it through reverb
     Generator toneReverb = Reverb().input(summedSaws).roomSize(10).dryLevel(0.1).wetLevel(0.8);
     
-    Generator toneComp = Compressor().attack(0.5).release(0.06).threshold(-15).ratio(10).input(toneReverb);
+    Generator toneComp = Compressor().attack(0.5).release(0.06).threshold(-15).ratio(15).input(toneReverb);
     
     synth.setOutputGen(toneComp);
     
