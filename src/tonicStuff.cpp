@@ -56,6 +56,9 @@ void ofApp::setupTonic() {
     ControlGenerator LFO;
     LFO = synth.addParameter("LFO");
     
+    ControlGenerator LFOrate;
+    LFOrate = synth.addParameter("LFOrate");
+    
     
     for (int i=0;i<tones.size();i++) {
         
@@ -85,13 +88,13 @@ void ofApp::setupTonic() {
         //Filter the saws
         cutoffs[i]= synth.addParameter(freqVect[i]);
         
-        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]+LFO*100*SineWave().freq(3.0));
+        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]+LFO*75*SineWave().freq(LFOrate));
         
         releases[i] = synth.addParameter(relVect[i]);
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(1.0).decay(0).sustain(1).release(releases[i]).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(2.5).decay(0).sustain(1).release(releases[i]).trigger(envTriggers[i]).legato(true);
         
         //Mix each subequent signal with an adder
         outputSum.input(envTones[i]);
@@ -124,16 +127,22 @@ void ofApp::triggerTonic() {
             synth.setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
             synth.setParameter(trigVect[i], 1);
             
+            cerr << userHeight/10000 << endl;
+            cerr << userHeight << endl;
             
             isTriggered[i]=true;
         }
         
         else if (!stalacs[i].isDrawn && isTriggered[i]) {
             synth.setParameter(relVect[i],0);
+            synth.setParameter(trigVect[i],1);
             
             isTriggered[i]=false;
         }
     }
+    
+    // Set LFO based stuff outside of the loop
+    synth.setParameter("LFOrate",15*(userHeight/10000));
     
     if (bFill) {
         synth.setParameter("LFO",1);
