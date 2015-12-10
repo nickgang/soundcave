@@ -197,6 +197,7 @@ class ofApp : public ofBaseApp{
         
     };
     
+    int numPlaying;
     bool isTriggered[MAX_STALAC];
     
     Stalacmite stalacs[MAX_STALAC];

@@ -137,6 +137,7 @@ void ofApp::setup(){
         stalacs[i].octave=3;
         
     }
+    numPlaying=0;
     maxHeight=10*width;
     isGrowing=false;
     
@@ -442,6 +443,8 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
             oct.calculate(fft.magnitudes);
         }
         
+        float tau = 0.4;
+        wallBuffer[i] += (output[i*nChannels]-wallBuffer[i])*tau;
 
         //play result
         if (playGrains){
@@ -453,16 +456,14 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
             avgRMS= avgRMS+temp;
         }
         else if(!playGrains) {
-            //output[i*nChannels] = 0;
-            //output[i*nChannels + 1] = 0;
+            output[i*nChannels ] /= numPlaying;
+            output[i*nChannels +1] /= numPlaying;
         }
 
         // Set wallBuffer to the audio signal we are hearing
         // We will assign this to make waveforms in the walls in drawRoom
         
         //Interpolate the signal
-        float tau = 0.4;
-        wallBuffer[i] += (output[i*nChannels]-wallBuffer[i])*tau;
         
         /* You may end up with lots of outputs. add them here */
     }
