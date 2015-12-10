@@ -15,6 +15,7 @@
 
 #define MY_SRATE 44100      //Sample Rate
 #define MY_BUFFER_SIZE 512  //Buffer Size
+#define MY_PIE      3.1416
 
 //Global dimensions of the room
 #define ROOM_HEIGHT 2000

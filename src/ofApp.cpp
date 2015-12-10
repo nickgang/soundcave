@@ -668,7 +668,7 @@ void ofApp::mousePressed(int x, int y, int button){
     stalacs[nextToDraw].isDrawn=true;
     
     //Increment index of stalacmites
-    if (nextToDraw++ > MAX_STALAC) nextToDraw=0;
+    if (nextToDraw++ >= MAX_STALAC) nextToDraw=0;
 }
 
 //--------------------------------------------------------------

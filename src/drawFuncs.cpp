@@ -26,7 +26,11 @@ void ofApp::drawMenuScreen(){
     
     ofSetColor(255);
     title.drawString("Welcome to Sound Cave",20,height*0.1);
+    
+    ofPushStyle();
+    ofSetColor(255, 255, 255, 255*sin((MY_PIE/2)*ofGetElapsedTimef()));
     subTitle.drawString("press 'm' to begin",width/4,height/4);
+    ofPopStyle();
     
     ofPopStyle();
 }
