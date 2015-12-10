@@ -43,3 +43,23 @@ void ofApp::interpSelector() {
     selector.setPosition(interpCoords);
 
 }
+
+// This function detects if the selector is overlapping with a currently drawn
+// stalacmite.
+void ofApp::detectOverlap() {
+    
+    bOverlap=false;
+    
+    for (int i=0;i<MAX_STALAC;i++){
+        // Find Euclidean distance between selector node and stalacmite node
+        float localDistX = abs(selectNode.getX()-stalacs[i].cylPos.getX());
+        float localDistZ = abs(selectNode.getZ()-stalacs[i].cylPos.getZ());
+        float localDist = sqrt(localDistX*localDistX +localDistZ * localDistZ);
+        if (stalacs[i].isDrawn && (localDist<stalacs[i].cyl.getRadius())) {
+            bOverlap=true;
+            overlapIndex = i;
+        }
+    }
+}
+
+

@@ -137,7 +137,8 @@ void ofApp::setup(){
         stalacs[i].octave=3;
         
     }
-    numPlaying=0;
+    
+    
     maxHeight=10*width;
     isGrowing=false;
     
@@ -221,6 +222,8 @@ void ofApp::update(){
     triggerTonic();
     updateFilters();
     
+    //Check for overlap between selector and stalacmites
+    detectOverlap();
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
@@ -634,12 +637,21 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
     //if (++current > stretches.size()-1) current = 0;
     
-    //Position of selector when clicked is position to draw new stalacmite
-    stalacs[nextToDraw].cylPos.setPosition(selector.getPosition());
-    stalacs[nextToDraw].isDrawn=true;
+    // If the selector is currently overlapping with a stalacmite
+    // kill it.
+    if (bOverlap){
+        stalacs[overlapIndex].isDrawn=false;
+    }
     
-    //Increment index of stalacmites
-    if (nextToDraw++ >= MAX_STALAC) nextToDraw=0;
+    // If not, draw a new one there
+    else {
+        //Position of selector when clicked is position to draw new stalacmite
+        stalacs[nextToDraw].cylPos.setPosition(selector.getPosition());
+        stalacs[nextToDraw].isDrawn=true;
+    
+        //Increment index of stalacmites
+        if (nextToDraw++ >= MAX_STALAC) nextToDraw=0;
+    }
 }
 
 //--------------------------------------------------------------

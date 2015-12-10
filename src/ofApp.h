@@ -175,6 +175,10 @@ class ofApp : public ofBaseApp{
     void setupSelector();
     void interpSelector();
     
+    void detectOverlap();
+    bool bOverlap;
+    int overlapIndex;
+    
     int nextToDraw;
     ofVec3f nextPos;
     
