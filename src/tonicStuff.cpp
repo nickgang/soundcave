@@ -121,14 +121,16 @@ void ofApp::triggerTonic() {
 
 void ofApp::updateFilters() {
     
+    float maxDistance = sqrt(ROOM_DEPTH^2+ROOM_WIDTH^2);
+    
     // Calculate distance from sphere to each stalacmite
     float distances[MAX_STALAC][2];
     float hypotenuse[MAX_STALAC];
     
     for (int i=0;i<MAX_STALAC;i++){
         //Fill distances matrix with euclidean distance to stalacs in x and z direction
-        distances[i][0]=sqrt((posNode.getX()*posNode.getX())+(stalacs[i].cylPos.getX())*(stalacs[i].cylPos.getX()));
-        distances[i][1]=sqrt((posNode.getZ()*posNode.getZ())+(stalacs[i].cylPos.getZ())*(stalacs[i].cylPos.getZ()));
+        distances[i][0] = abs(posNode.getX() - stalacs[i].cylPos.getX());
+        distances[i][1] = abs(posNode.getZ() - stalacs[i].cylPos.getZ());
         
         hypotenuse[i]=sqrt(distances[i][0]*distances[i][0]+distances[i][1]*distances[i][1]);
         
@@ -136,13 +138,14 @@ void ofApp::updateFilters() {
         float eps = 0.0001;
         
         //Send filter cutoff messages to the synth object
-        synth.setParameter(freqVect[i], (1/(hypotenuse[i]+eps))*15000);
+        synth.setParameter(freqVect[i], (maxDistance/hypotenuse[i])*15000);
         
     }
-    cerr << 1/hypotenuse[0];
     
     
     
+    //For Debugging
+    //cerr << (maxDistance/hypotenuse[i])*15000) << endl;
     
 }
 
