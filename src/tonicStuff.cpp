@@ -97,7 +97,7 @@ void ofApp::setupTonic() {
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(2.5).decay(0).sustain(1).release(releases[i]).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(2.5).decay(3.0).sustain(0.5).release(releases[i]).trigger(envTriggers[i]).legato(true);
         
         //Mix each subequent signal with an adder
         outputSum.input(envTones[i]);
@@ -188,10 +188,17 @@ void ofApp::updateFilters() {
         
     }
     
+}
+
+// Performs a camera warp by changing the field of view dramatically
+
+void ofApp::timeWarp() {
     
-    
-    //For Debugging
-    //cerr << (maxDistance/hypotenuse[i])*15000) << endl;
+    if(bTimewarp) {
+        if (cam[0].getFov()>-1*(cam[0].getFov())) {
+            //Slew the field of view towards -1 times the field of view
+        }
+    }
     
 }
 

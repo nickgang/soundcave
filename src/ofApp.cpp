@@ -329,7 +329,7 @@ void ofApp::draw(){
                 ofSetColor(255);
                 ofSetCylinderResolution(6,6);
                 
-                ofTranslate(stalacs[i].cylPos.getX(),0,stalacs[i].cylPos.getZ());
+                ofTranslate(stalacs[i].cylPos.getX(),stalacs[i].cyl.getHeight()/2,stalacs[i].cylPos.getZ());
                 stalacs[i].cyl.draw();
                 
                 float currentHeight = stalacs[i].cyl.getHeight();
@@ -546,6 +546,14 @@ void ofApp::keyPressed(int key){
         case OF_KEY_DOWN:
             cam[currentCam].tilt(-manTilt);
             break;
+            
+        //Test changing FOV in real time
+        case 'x':
+            cam[0].setFov(cam[0].getFov() + 5);
+            break;
+        case 'c':
+            cam[0].setFov(cam[0].getFov() - 5);
+            break;
         
         //Light Stuff
         case 'l':
@@ -568,6 +576,7 @@ void ofApp::keyPressed(int key){
             selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-selectMove);
             break;
             
+        //Play the cave sounds
         case 'z':
             cave.play();
             break;

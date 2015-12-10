@@ -217,6 +217,11 @@ class ofApp : public ofBaseApp{
     int wallCounter;
     
     int margin;
+    
+    //To be implemented in future version
+    void timeWarp();
+    bool bTimewarp;
+    
     //--------------------------------------------------
 
 };
