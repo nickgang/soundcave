@@ -28,6 +28,8 @@ void ofApp::setup(){
     cave.loadSound("cave-drips.wav");
     cave.setLoop(true);
     
+    playCave = false;
+    
     //----------Stuff for the cameras-------------------------------
     
     setupCams();
@@ -519,9 +521,15 @@ void ofApp::keyPressed(int key){
             selectNode.setPosition(selectNode.getX(),selectNode.getY(),selectNode.getZ()-selectMove);
             break;
             
-        //Play the cave sounds
+        //Toggle the cave sounds
         case 'z':
-            cave.play();
+            playCave = !playCave;
+            if (playCave){
+                cave.play();
+            }
+            else {
+                cave.stop();
+            }
             break;
             
             

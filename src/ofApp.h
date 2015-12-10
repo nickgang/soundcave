@@ -100,6 +100,7 @@ class ofApp : public ofBaseApp{
     bool playGrains;
     
     ofSoundPlayer cave;
+    bool playCave;
     
     //-----------------Tonic Stuff-----------------------
     
