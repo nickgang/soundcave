@@ -25,15 +25,17 @@ void ofApp::drawMenuScreen(){
     ofPushStyle();
     
     ofSetColor(255);
-    title.drawString("Welcome to Sound Cave",20,height*0.1);
+    title.drawString("Welcome to Sound Cave",width*0.22,height*0.1);
     
     ofPushStyle();
     ofSetColor(255, 255, 255, 255*sin((MY_PIE/2)*ofGetElapsedTimef()));
-    subTitle.drawString("press 'm' to begin",width/4,height/4);
+    subTitle.drawString("press 'm' to begin",width/2.8,height/4);
     ofPopStyle();
     
-    instructions.drawString("Use arrow keys to move selector, click to create a stalacmite \n 1,2,3 keys swtich camera view \n 8 key freezes the sphere. \n 0 key sharpens sphere, " ,width/8,3*height/4);
+    if (bInstructions) {
     
+        instructions.drawString(" w, a, s, d keys move selector, click to create a stalacmite \n 1,2,3 keys swtich camera view \n 8 key freezes the sphere. \n 9 key sharpens sphere \n , and . keys changing the sphere's height \n - and = keys change the speed of the sphere around the cave \n i key toggles instructions \n arrow keys move the camera in view 1 \n l key toggles the light in the cave \n z key toggles cave sounds \n x and c keys change field of view in view 1" ,width/8,3*height/4);
+    }
     
     ofPopStyle();
 }

@@ -424,11 +424,16 @@ void ofApp::keyPressed(int key){
             bFill = !bFill;
             break;
         case '9':
-            bWireframe = !bWireframe;
-            break;
-        case '0':
             bDrawNormals = !bDrawNormals;
             break;
+        /*For 1.0 performance, disabling wireframe toggle
+        case '0':
+            bWireframe = !bWireframe;
+            break;
+            
+            */
+        
+        /*Disabling changing view mode
         case ' ':
             if (viewMode==0){
                 viewMode = 3;
@@ -440,6 +445,7 @@ void ofApp::keyPressed(int key){
                 userPos.mapTexCoords(0, 0, 5, 5);
             }
             break;
+         */
         case ',':
             userHeight-=yInc;
             break;
@@ -467,6 +473,9 @@ void ofApp::keyPressed(int key){
             break;
         case '3':
             currentCam=2;
+            break;
+        case '4':
+            currentCam=3;
             break;
         case OF_KEY_LEFT:
             cam[currentCam].pan(manPan);

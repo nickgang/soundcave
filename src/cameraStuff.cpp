@@ -37,6 +37,11 @@ void ofApp::setupCams() {
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
     
+    //Cam 3 orbits the sphere
+    cam[3].setPosition(posNode.getPosition());
+    cam[3].lookAt(posNode);
+    cam[3].orbit(500,500,500,posNode.getPosition());
+    
     //Point Lighting Setup, turning lights on by default
     isLit=true;
     ofSetSmoothLighting(true);
@@ -73,24 +78,28 @@ void ofApp::setupCams() {
 
 void ofApp::updateCams() {
     
-    //Update height of the target (if it has changed)
+    // Update height of the target (if it has changed)
     target.setPosition(target.getX(),userHeight,target.getZ());
     
-    //Figure out slew coordinates
+    // Figure out slew coordinates
     slewCoords.set(posNode.getX()+(target.getX()-posNode.getX())*slew,posNode.getY()+(target.getY()-posNode.getY())*slew,posNode.getZ()+(target.getZ()-posNode.getZ())*slew);
     
-    //Move position node to slew coordinates
+    // Move position node to slew coordinates
     posNode.setPosition(slewCoords);
     
     // Set position of moving camera relative to target
     cam[0].setPosition(posNode.getX()-250,posNode.getY()+250,posNode.getZ()-250);
     
-    //Cam 1 looks at sphere from above
+    // Cam 1 looks at sphere from above
     cam[1].lookAt(posNode);
     
-    //Cam2 looks at target from inside the sphere
+    // Cam2 looks at target from inside the sphere
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
+    
+    // Cam 3 looks at sphere while orbiting it
+    cam[3].lookAt(posNode);
+    cam[3].orbit(100,100,500,posNode.getPosition());
     
 }
 

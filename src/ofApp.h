@@ -23,7 +23,7 @@
 #define ROOM_DEPTH  3000
 #define NUM_LINES   40
 
-#define NUM_CAMS    3
+#define NUM_CAMS    4
 #define MAX_STALAC  16
 
 using namespace Tonic;
