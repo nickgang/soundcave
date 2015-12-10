@@ -21,20 +21,25 @@ void ofApp::setupTonic() {
     midiNotes.resize(MAX_STALAC);
     midiVect.resize(midiNotes.size());
 
-     // convert a midi note to a frequency (plugging that parameter into another object)
+    // convert a midi note to a frequency (plugging that parameter into another object)
     vector<ControlGenerator> noteFreqs;
     noteFreqs.resize(midiNotes.size());
     
     
-    //Create trigger messages for each ADSR
+    // Create trigger messages for each ADSR
     vector<ControlGenerator> envTriggers;
     envTriggers.resize(midiNotes.size());
     trigVect.resize(midiNotes.size());
     
-    //Create cuttof freq message for each filter
+    // Create cutoff freq message for each filter
     vector<ControlGenerator> cutoffs;
     cutoffs.resize(midiNotes.size());
     freqVect.resize(midiNotes.size());
+    
+    // Create Amp Env Release message for killing notes
+    vector<ControlGenerator> releases;
+    releases.resize(midiNotes.size());
+    relVect.resize(midiNotes.size());
     
     //Create Vector of Saws sound by the stalacmites
     vector<Tonic::Generator> tones;
@@ -44,43 +49,45 @@ void ofApp::setupTonic() {
     vector<Tonic::Generator> envTones;
     envTones.resize(tones.size());
     
+    //An adder object to sum the 16 voices and a generator to hold the output
     Tonic::Adder outputSum;
     Tonic::Generator summedSaws;
     
     for (int i=0;i<tones.size();i++) {
         
-        //We need to concatenate index to these two strings
+        //We need to concatenate index to these four strings
         std::ostringstream curMidi;
-        curMidi << "midiNumber" << (i+1);
-        
-        //Store the stringstream as a regular string in a vector
-        midiVect[i] = curMidi.str();
-        
         std::ostringstream curTrig;
+        std::ostringstream curFreq;
+        std::ostringstream curRel;
+        
+        
+        curMidi << "midiNumber" << (i+1);
         curTrig << "trigger" << (i+1);
+        curFreq << "cutoff" << (i+1);
+        curRel << "release" << (i+1);
         
+        //Store the stringstreams as regular strings in vectors
+        midiVect[i] = curMidi.str();
         trigVect[i] = curTrig.str();
+        freqVect[i] = curFreq.str();
+        relVect[i] = curRel.str();
         
+        //Get frequency for each voice
         midiNotes[i] = synth.addParameter(midiVect[i]);
-        
         noteFreqs[i] = ControlMidiToFreq().input(midiNotes[i]);
-        
         tones[i] = SawtoothWave().freq(noteFreqs[i]);
         
         //Filter the saws
-
-        std::ostringstream curFreq;
-        curFreq << "cutoff" << (i+1);
-        freqVect[i] = curFreq.str();
-        
         cutoffs[i]= synth.addParameter(freqVect[i]);
         
         tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]);
         
+        releases[i] = synth.addParameter(relVect[i]);
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(1.0).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(1.0).decay(0).sustain(1).release(releases[i]).trigger(envTriggers[i]).legato(true);
         
         //Mix each subequent signal with an adder
         outputSum.input(envTones[i]);
@@ -108,11 +115,19 @@ void ofApp::triggerTonic() {
     //Loop through
     for (int i=0;i<MAX_STALAC;i++){
         if (stalacs[i].isDrawn && !isTriggered[i]){
+            
+            synth.setParameter(relVect[i],1);
             synth.setParameter(midiVect[i], stalacs[i].octave*12 + stalacs[i].pitch);
             synth.setParameter(trigVect[i], 1);
             
             
             isTriggered[i]=true;
+        }
+        
+        else if (!stalacs[i].isDrawn && isTriggered[i]) {
+            synth.setParameter(relVect[i],0);
+            
+            isTriggered[i]=false;
         }
     }
     

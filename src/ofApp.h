@@ -108,6 +108,7 @@ class ofApp : public ofBaseApp{
     vector<string> midiVect;
     vector<string> trigVect;
     vector<string> freqVect;
+    vector<string> relVect;
     
     //Mixer for the output
     Mixer sawMix;
