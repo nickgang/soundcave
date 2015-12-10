@@ -124,7 +124,7 @@ void ofApp::setup(){
     
     //----------Cylinder Setup--------------------------------------
     
-    int degrees[MAX_STALAC] = {0,3,7,10,14,17,24,27,31,34,38,41,48,51,55,58};
+    int degrees[MAX_STALAC] = {0,3,7,10,2,5,24,27,31,34,38,41,48,51,55,58};
     
     //Initialize all stalacmites to the same parameters for now
     for (int i=0;i<MAX_STALAC;i++){
@@ -220,6 +220,17 @@ void ofApp::update(){
     //This takes care of updating the audio from tonic
     triggerTonic();
     updateFilters();
+    
+    
+    //Figure out how many voices are playing (we need this for normalization)
+    
+    numPlaying=0;
+    
+    for (int i=0;i<MAX_STALAC;i++){
+        if (stalacs[i].isDrawn){
+            numPlaying++;
+        }
+    }
     
     //Update grain speed with sphere height
     //speed = -.75+userHeight*0.001;
@@ -443,19 +454,24 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
             oct.calculate(fft.magnitudes);
         }
         
-        float tau = 0.4;
-        wallBuffer[i] += (output[i*nChannels]-wallBuffer[i])*tau;
+        //float tau = 0.4;
+        //wallBuffer[i] += (output[i*nChannels]-wallBuffer[i])*tau;
 
         //play result
         if (playGrains){
             mymix.stereo(wave, outputs, 0.5);
-            output[i*nChannels    ] += outputs[0]; /* You may end up with lots of outputs. add them here */
+            output[i*nChannels    ] += outputs[0];
             output[i*nChannels + 1] += outputs[1];
-        
+            
+            //Normalizing by dividing by number of voices playing
+            output[i*nChannels ] /= numPlaying;
+            output[i*nChannels +1] /= numPlaying;
+            
             temp = (outputs[0] + outputs[1])/2;
             avgRMS= avgRMS+temp;
         }
         else if(!playGrains) {
+            //Normalizing by dividing by number of voices playing
             output[i*nChannels ] /= numPlaying;
             output[i*nChannels +1] /= numPlaying;
         }

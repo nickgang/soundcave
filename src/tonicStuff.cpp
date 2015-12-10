@@ -80,7 +80,7 @@ void ofApp::setupTonic() {
         envTriggers[i] = synth.addParameter(trigVect[i]);
         
         //Send them through an envelope
-        envTones[i] = tones[i] * ADSR().attack(0.90).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
+        envTones[i] = tones[i] * ADSR().attack(1.0).decay(0).sustain(1).release(1).trigger(envTriggers[i]).legato(true);
         
         //Mix
         outputSum.input(envTones[i]);
