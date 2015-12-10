@@ -42,16 +42,20 @@ void ofApp::setupTonic() {
     relVect.resize(midiNotes.size());
     
     //Create Vector of Saws sound by the stalacmites
-    vector<Tonic::Generator> tones;
+    vector<Generator> tones;
     tones.resize(MAX_STALAC);
     
     //Create generator vector to hold 16 voices post envelope
-    vector<Tonic::Generator> envTones;
+    vector<Generator> envTones;
     envTones.resize(tones.size());
     
     //An adder object to sum the 16 voices and a generator to hold the output
-    Tonic::Adder outputSum;
-    Tonic::Generator summedSaws;
+    Adder outputSum;
+    Generator summedSaws;
+    
+    ControlGenerator LFO;
+    LFO = synth.addParameter("LFO");
+    
     
     for (int i=0;i<tones.size();i++) {
         
@@ -81,7 +85,7 @@ void ofApp::setupTonic() {
         //Filter the saws
         cutoffs[i]= synth.addParameter(freqVect[i]);
         
-        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]);
+        tones[i] = LPF24().input(tones[i]).Q(3).cutoff(cutoffs[i]+LFO*100*SineWave().freq(3.0));
         
         releases[i] = synth.addParameter(relVect[i]);
         envTriggers[i] = synth.addParameter(trigVect[i]);
@@ -129,6 +133,13 @@ void ofApp::triggerTonic() {
             
             isTriggered[i]=false;
         }
+    }
+    
+    if (bFill) {
+        synth.setParameter("LFO",1);
+    }
+    else if (!bFill) {
+        synth.setParameter("LFO",0);
     }
     
     
