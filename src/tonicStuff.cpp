@@ -100,7 +100,7 @@ void ofApp::setupTonic() {
     //Generator toneDelay = StereoDelay(0.5, 0.75).input(summedSaws).wetLevel(0.1).feedback(0.2);
     
     // Send it through reverb
-    Generator toneReverb = Reverb().input(summedSaws).roomSize(10).dryLevel(0.1).wetLevel(0.8);
+    Generator toneReverb = Reverb().input(summedSaws).roomSize(20).dryLevel(0.1).wetLevel(0.8);
     
     Generator toneComp = Compressor().attack(0.5).release(0.06).threshold(-15).ratio(15).input(toneReverb);
     
