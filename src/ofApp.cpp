@@ -443,7 +443,7 @@ void ofApp::keyPressed(int key){
             
             */
         
-        /*Disabling changing view mode
+        //Disabling changing view mode
         case ' ':
             if (viewMode==0){
                 viewMode = 3;
@@ -455,7 +455,6 @@ void ofApp::keyPressed(int key){
                 userPos.mapTexCoords(0, 0, 5, 5);
             }
             break;
-         */
         case ',':
             userHeight-=yInc;
             break;

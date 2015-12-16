@@ -32,16 +32,19 @@ void ofApp::setupCams() {
     //Cam 1 is the top view, looking at the sphere
     cam[1].setPosition(ROOM_WIDTH/2,ROOM_HEIGHT*2,ROOM_DEPTH/2);
     cam[1].lookAt(cam[0]);
+    camNode[1].setPosition(cam[1].getPosition());
     
     //Cam 2 is first person view of the sphere
     cam[2].setPosition(posNode.getPosition());
     cam[2].lookAt(target);
+    camNode[2].setPosition(cam[2].getPosition());
     
     //Cam 3 is a static top view
     cam[3].setPosition(ROOM_WIDTH/2,2.5*ROOM_HEIGHT,ROOM_DEPTH/2);
     centerNode.setPosition(ROOM_WIDTH/2,0, ROOM_HEIGHT/2);
     cam[3].lookAt(centerNode);
     cam[3].setFov(70);
+    camNode[3].setPosition(cam[3].getPosition());
     
     //Point Lighting Setup, turning lights on by default
     isLit=true;
@@ -103,7 +106,21 @@ void ofApp::updateCams() {
     
 }
 
+//------------------------------------------------------------------------------
+// This function interpolates movement when the user switches the current camera
+//------------------------------------------------------------------------------
 void ofApp::interpCams(float targetFov) {
-    //Coming in v 2.0
+    
+    // Make a temporary node to put at the current slew position
+    ofNode interpNode;
+    
+    // Calculate where the x y and z positions of the node should be
+    float xPos = (posNode.getX()+cam[currentCam].getX())/2;
+    float yPos = (posNode.getY()+cam[currentCam].getY())/2;
+    float zPos = (posNode.getZ()+cam[currentCam].getZ())/2;
+    
+    // Do the deed
+    interpNode.setPosition(xPos,yPos,zPos);
+    
 }
 
