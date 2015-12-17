@@ -29,6 +29,10 @@ void ofApp::setupCams() {
     cam[0].pan(220);
     cam[0].setFov(65);
     
+    //camera 4 is going to test interpolating between different views
+    cam[4].pan(220);
+    cam[4].setFov(65);
+    
     //Cam 1 is the top view, looking at the sphere
     cam[1].setPosition(ROOM_WIDTH/2,ROOM_HEIGHT*2,ROOM_DEPTH/2);
     cam[1].lookAt(cam[0]);
@@ -59,8 +63,6 @@ void ofApp::setupCams() {
     pointLight3.setPointLight();
     pointLight4.setPointLight();
     
-    
-    ofVec3f roomMiddle;
     roomMiddle.set(ROOM_WIDTH/2,0,ROOM_DEPTH/2);
     
     pointLight1.lookAt(roomMiddle);
@@ -102,6 +104,20 @@ void ofApp::updateCams() {
     cam[2].lookAt(target);
     
     // Cam 3 doesn't need updating
+    
+    // Stuff for our interpolating test cam
+    
+    switch (currentCam) {
+        case 1:
+            cam[4].lookAt(posNode);
+            break;
+        case 2:
+            cam[4].lookAt(target);
+            break;
+        case 3:
+            cam[4].lookAt(roomMiddle);
+            break;
+    }
 
     
 }
@@ -109,18 +125,17 @@ void ofApp::updateCams() {
 //------------------------------------------------------------------------------
 // This function interpolates movement when the user switches the current camera
 //------------------------------------------------------------------------------
-void ofApp::interpCams(float targetFov) {
+void ofApp::interpCams() {
     
-    // Make a temporary node to put at the current slew position
-    ofNode interpNode;
+    float localSlew = slew/8;
     
     // Calculate where the x y and z positions of the node should be
-    float xPos = (posNode.getX()+cam[currentCam].getX())/2;
-    float yPos = (posNode.getY()+cam[currentCam].getY())/2;
-    float zPos = (posNode.getZ()+cam[currentCam].getZ())/2;
+    float xPos = cam[4].getX()+(cam[currentCam].getX()-cam[4].getX())*localSlew;
+    float yPos = cam[4].getY()+(cam[currentCam].getY()-cam[4].getY())*localSlew;
+    float zPos = cam[4].getZ()+(cam[currentCam].getZ()-cam[4].getZ())*localSlew;
     
     // Do the deed
-    interpNode.setPosition(xPos,yPos,zPos);
+    cam[4].setPosition(xPos,yPos,zPos);
     
 }
 

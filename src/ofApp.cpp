@@ -186,12 +186,13 @@ void ofApp::update(){
     //Check for overlap between selector and stalacmites
     detectOverlap();
     
-    //Update grain speed with sphere height
-    //speed = -.75+userHeight*0.001;
-    
     //Update position of selector with some interpolation
     interpSelector();
     
+    //Interpolate cameras
+    interpCams();
+    
+    //update camera positions
     updateCams();
     
     //Maxmilian Granular stuff (Wekinator)
@@ -228,7 +229,9 @@ void ofApp::draw(){
     
     if (!menuScreen){
     
-    cam[currentCam].begin();
+        //Hardcoding this line while we test camera interpolation
+        cam[4].begin();
+        //cam[currentCam].begin();
     
         
         if (isLit){
@@ -316,8 +319,10 @@ void ofApp::draw(){
     pointLight3.disable();
     pointLight4.disable();
     
-        
-    cam[currentCam].end();
+      
+        // Hardcoding this line while we test camera interpolation
+        cam[4].end();
+        //cam[currentCam].end();
         
     }
     

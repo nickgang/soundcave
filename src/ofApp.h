@@ -23,7 +23,7 @@
 #define ROOM_DEPTH  3000
 #define NUM_LINES   40
 
-#define NUM_CAMS    4
+#define NUM_CAMS    5
 #define MAX_STALAC  16
 
 using namespace Tonic;
@@ -218,6 +218,8 @@ class ofApp : public ofBaseApp{
     ofNode centerNode;
     int currentCam;
     
+    ofVec3f roomMiddle;
+    
     float dollyInc;
     float panInc;
     float boomInc;
@@ -227,7 +229,7 @@ class ofApp : public ofBaseApp{
     
     void setupCams();
     void updateCams();
-    void interpCams(float targetFov);
+    void interpCams();
     float targetPan;
     float currentPan;
     
