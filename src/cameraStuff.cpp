@@ -108,6 +108,8 @@ void ofApp::updateCams() {
     // Stuff for our interpolating test cam
     
     switch (currentCam) {
+        case 0:
+            cam[4].lookAt(posNode);
         case 1:
             cam[4].lookAt(posNode);
             break;

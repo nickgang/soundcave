@@ -21,6 +21,8 @@ void ofApp::moveTarget(string spherePath){
     if(spherePath=="border"){
         //Update target position
         
+        // Forward direction
+        if (xInc >= 0 && zInc >= 0) {
         switch (wallCounter) {
             case 0:
                 if (target.getX()<ROOM_WIDTH-margin){
@@ -57,6 +59,48 @@ void ofApp::moveTarget(string spherePath){
                     target.setPosition(target.getX()+xInc,target.getY(),target.getZ());
                     wallCounter=0;
                 }
+        }
+        }
+        
+        // Reverse Direction
+        else if (xInc < 0 && zInc < 0) {
+            switch (wallCounter) {
+                case 0:
+                    if (target.getX()>margin){
+                        target.setPosition(target.getX()+xInc,target.getY(),target.getZ());
+                    }
+                    else {
+                        target.setPosition(target.getX(),target.getY(),target.getZ()-zInc);
+                        wallCounter = 3;
+                    }
+                    break;
+                case 1:
+                    if (target.getZ()>margin){
+                        target.setPosition(target.getX(),target.getY(),target.getZ()+zInc);
+                    }
+                    else {
+                        target.setPosition(target.getX()+xInc,target.getY(),target.getZ());
+                        wallCounter--;
+                    }
+                    break;
+                case 2:
+                    if (target.getX()<ROOM_WIDTH-margin){
+                        target.setPosition(target.getX()-xInc,target.getY(),target.getZ());
+                    }
+                    else {
+                        target.setPosition(target.getX(),target.getY(),target.getZ()+zInc);
+                        wallCounter--;
+                    }
+                    break;
+                case 3:
+                    if (target.getZ()<ROOM_DEPTH-margin){
+                        target.setPosition(target.getX(),target.getY(),target.getZ()-zInc);
+                    }
+                    else {
+                        target.setPosition(target.getX()-xInc,target.getY(),target.getZ());
+                        wallCounter--;
+                    }
+            }
         }
     }
     else if(spherePath=="figureEight"){

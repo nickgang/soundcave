@@ -6,6 +6,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofSetFrameRate(24);
+    
     // Load fonts for the menu screen
     title.loadFont("Alfphabet-IV.ttf", 30);
     subTitle.loadFont("Alfphabet-IV.ttf", 18);
@@ -230,8 +232,8 @@ void ofApp::draw(){
     if (!menuScreen){
     
         //Hardcoding this line while we test camera interpolation
-        cam[4].begin();
-        //cam[currentCam].begin();
+        //cam[4].begin();
+        cam[currentCam].begin();
     
         
         if (isLit){
@@ -321,8 +323,8 @@ void ofApp::draw(){
     
       
         // Hardcoding this line while we test camera interpolation
-        cam[4].end();
-        //cam[currentCam].end();
+        //cam[4].end();
+        cam[currentCam].end();
         
     }
     
@@ -440,13 +442,9 @@ void ofApp::keyPressed(int key){
         case '9':
             bDrawNormals = !bDrawNormals;
             break;
-            
-        /*For 1.0 performance, disabling wireframe toggle
         case '0':
             bWireframe = !bWireframe;
             break;
-            
-            */
         
         //Disabling changing view mode
         case ' ':
